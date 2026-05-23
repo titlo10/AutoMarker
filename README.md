@@ -70,7 +70,7 @@ Drop the `.jar` into your `mods` folder and you're done.
 ```bash
 git clone https://github.com/titlo10/AutoMarker.git
 cd AutoMarker
-./gradlew build
+./gradlew bundleJar
 ```
 
 Output goes to `build/libs` and `build/bundled`.
