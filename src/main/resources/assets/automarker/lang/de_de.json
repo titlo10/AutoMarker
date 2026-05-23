@@ -1,0 +1,11 @@
+{
+  "key.category.automarker.keys": "AutoMarker",
+  "key.categories.automarker": "AutoMarker",
+  "key.automarker.config": "Einstellungen öffnen",
+  "gui.automarker.title": "ReplayMod Auto-Marker Einstellungen",
+  "gui.automarker.track_deaths": "Spielertode verfolgen",
+  "gui.automarker.track_achievements": "Erfolge verfolgen",
+  "gui.automarker.keywords": "Schlüsselwörter",
+  "gui.automarker.chat_keywords_label": "Eigene Chat-Schlüsselwörter (kommagetrennt):",
+  "gui.automarker.done": "Fertig"
+}

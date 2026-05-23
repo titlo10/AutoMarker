@@ -26,7 +26,7 @@ public class AutoMarkerConfigScreen extends Screen {
     private final AutoMarkerConfig config;
 
     public AutoMarkerConfigScreen(Screen parent) {
-        super(Component.literal("ReplayMod Auto-Marker Settings"));
+        super(Component.translatable("gui.automarker.title"));
         this.parent = parent;
         this.config = AutoMarkerMod.config;
     }
@@ -36,7 +36,7 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$ private final AutoMarkerConfig config;
     //$$
     //$$ public AutoMarkerConfigScreen(Screen parent) {
-    //$$     super(Text.literal("ReplayMod Auto-Marker Settings"));
+    //$$     super(Text.translatable("gui.automarker.title"));
     //$$     this.parent = parent;
     //$$     this.config = AutoMarkerMod.config;
     //$$ }
@@ -50,49 +50,49 @@ public class AutoMarkerConfigScreen extends Screen {
         //#if MC>=260100
         // Toggle Deaths button
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableDeaths)
-            .create(x - 100, y, 200, 20, Component.literal("Track Player Deaths"), (button, value) -> {
+            .create(x - 100, y, 200, 20, Component.translatable("gui.automarker.track_deaths"), (button, value) -> {
                 config.enableDeaths = value;
             })
         );
 
         // Toggle Achievements button
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableAchievements)
-            .create(x - 100, y + 25, 200, 20, Component.literal("Track Achievements"), (button, value) -> {
+            .create(x - 100, y + 25, 200, 20, Component.translatable("gui.automarker.track_achievements"), (button, value) -> {
                 config.enableAchievements = value;
             })
         );
 
         // Text field input for chat keywords
-        this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 70, 200, 20, Component.literal("Keywords"));
+        this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 70, 200, 20, Component.translatable("gui.automarker.keywords"));
         this.chatKeywordsEdit.setValue(config.chatKeywords);
         this.addRenderableWidget(this.chatKeywordsEdit);
 
         // Done button
-        this.addRenderableWidget(Button.builder(Component.literal("Done"), button -> {
+        this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.done"), button -> {
             onClose();
         }).bounds(x - 100, y + 110, 200, 20).build());
         //#else
         //$$ // Toggle Deaths button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDeaths)
-        //$$     .build(x - 100, y, 200, 20, Text.literal("Track Player Deaths"), (button, value) -> {
+        //$$     .build(x - 100, y, 200, 20, Text.translatable("gui.automarker.track_deaths"), (button, value) -> {
         //$$         config.enableDeaths = value;
         //$$     })
         //$$ );
         //$$
         //$$ // Toggle Achievements button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableAchievements)
-        //$$     .build(x - 100, y + 25, 200, 20, Text.literal("Track Achievements"), (button, value) -> {
+        //$$     .build(x - 100, y + 25, 200, 20, Text.translatable("gui.automarker.track_achievements"), (button, value) -> {
         //$$         config.enableAchievements = value;
         //$$     })
         //$$ );
         //$$
         //$$ // Text field input for chat keywords
-        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, x - 100, y + 70, 200, 20, Text.literal("Keywords"));
+        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, x - 100, y + 70, 200, 20, Text.translatable("gui.automarker.keywords"));
         //$$ this.chatKeywordsEdit.setText(config.chatKeywords);
         //$$ this.addDrawableChild(this.chatKeywordsEdit);
         //$$
         //$$ // Done button
-        //$$ this.addDrawableChild(ButtonWidget.builder(Text.literal("Done"), button -> {
+        //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.done"), button -> {
         //$$     close();
         //$$ }).dimensions(x - 100, y + 110, 200, 20).build());
         //#endif
@@ -104,9 +104,9 @@ public class AutoMarkerConfigScreen extends Screen {
         super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
         int x = this.width / 2;
         int y = this.height / 4;
-        graphics.text(this.font, this.title, x - this.font.width(this.title) / 2, y - 20, 0xFFFFFF);
-        Component label = Component.literal("Custom Chat Keywords (comma-separated):");
-        graphics.text(this.font, label, x - 100, y + 55, 0xA0A0A0);
+        graphics.text(this.font, this.title, x - this.font.width(this.title) / 2, y - 20, 0xFFFFFFFF);
+        Component label = Component.translatable("gui.automarker.chat_keywords_label");
+        graphics.text(this.font, label, x - 100, y + 55, 0xFFA0A0A0);
     }
     //#else
     //$$ @Override
@@ -115,7 +115,7 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$     int x = this.width / 2;
     //$$     int y = this.height / 4;
     //$$     context.drawTextWithShadow(this.textRenderer, this.title, x - this.textRenderer.getWidth(this.title) / 2, y - 20, 0xFFFFFF);
-    //$$     Text label = Text.literal("Custom Chat Keywords (comma-separated):");
+    //$$     Text label = Text.translatable("gui.automarker.chat_keywords_label");
     //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 55, 0xA0A0A0);
     //$$ }
     //#endif

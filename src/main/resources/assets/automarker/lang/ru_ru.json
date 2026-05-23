@@ -1,0 +1,11 @@
+{
+  "key.category.automarker.keys": "AutoMarker",
+  "key.categories.automarker": "AutoMarker",
+  "key.automarker.config": "Открыть настройки",
+  "gui.automarker.title": "Настройки ReplayMod Auto-Marker",
+  "gui.automarker.track_deaths": "Отслеживать смерти игрока",
+  "gui.automarker.track_achievements": "Отслеживать достижения",
+  "gui.automarker.keywords": "Ключевые слова",
+  "gui.automarker.chat_keywords_label": "Свои ключевые слова для чата (через запятую):",
+  "gui.automarker.done": "Готово"
+}

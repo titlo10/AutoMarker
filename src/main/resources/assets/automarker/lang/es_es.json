@@ -1,0 +1,11 @@
+{
+  "key.category.automarker.keys": "AutoMarker",
+  "key.categories.automarker": "AutoMarker",
+  "key.automarker.config": "Abrir ajustes",
+  "gui.automarker.title": "Ajustes de ReplayMod Auto-Marker",
+  "gui.automarker.track_deaths": "Registrar muertes del jugador",
+  "gui.automarker.track_achievements": "Registrar logros",
+  "gui.automarker.keywords": "Palabras clave",
+  "gui.automarker.chat_keywords_label": "Palabras clave de chat personalizadas (separadas por comas):",
+  "gui.automarker.done": "Hecho"
+}

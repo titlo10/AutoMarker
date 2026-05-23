@@ -1,0 +1,11 @@
+{
+  "key.category.automarker.keys": "AutoMarker",
+  "key.categories.automarker": "AutoMarker",
+  "key.automarker.config": "設定を開く",
+  "gui.automarker.title": "ReplayMod Auto-Marker設定",
+  "gui.automarker.track_deaths": "プレイヤーの死亡を記録する",
+  "gui.automarker.track_achievements": "実績を記録する",
+  "gui.automarker.keywords": "キーワード",
+  "gui.automarker.chat_keywords_label": "カスタムチャットキーワード（カンマ区切り）:",
+  "gui.automarker.done": "完了"
+}
