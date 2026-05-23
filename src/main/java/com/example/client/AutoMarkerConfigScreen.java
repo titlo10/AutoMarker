@@ -114,9 +114,9 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$     super.render(context, mouseX, mouseY, delta);
     //$$     int x = this.width / 2;
     //$$     int y = this.height / 4;
-    //$$     context.drawTextWithShadow(this.textRenderer, this.title, x - this.textRenderer.getWidth(this.title) / 2, y - 20, 0xFFFFFF);
+    //$$     context.drawTextWithShadow(this.textRenderer, this.title, x - this.textRenderer.getWidth(this.title) / 2, y - 20, 0xFFFFFFFF);
     //$$     Text label = Text.translatable("gui.automarker.chat_keywords_label");
-    //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 55, 0xA0A0A0);
+    //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 55, 0xFFA0A0A0);
     //$$ }
     //#endif
 
