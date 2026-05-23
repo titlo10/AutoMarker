@@ -30,7 +30,7 @@ The mod currently supports automatic marker generation for the following events:
 
 *   💀 **Player Deaths:** Every time you die, a marker named `"Player Died"` is placed on the recording. Perfect for capturing bloopers and fails.
 *   🏆 **Advancements & Achievements:** Automatically drops a marker like `"Advancement: [Advancement Name]"` when you complete an advancement, allowing you to jump straight to milestone moments.
-*   💬 **Chat Keywords:** The mod monitors the game chat. If a message contains any of your defined keywords (e.g., `@titlo10`), it immediately places a marker like `"Chat: [Keyword]"`. This is extremely useful for:
+*   💬 **Chat Keywords:** The mod monitors the game chat. If a message contains any of your defined keywords (e.g., `marker`), it immediately places a marker like `"Chat: [Keyword]"`. This is extremely useful for:
     *   Stream/donation integration.
     *   Quickly bookmarks via typing in chat.
     *   Tracking specific server plugin logs.
@@ -48,7 +48,7 @@ You can customize the mod either via the in-game settings GUI or by editing the 
 4. From the GUI, you can:
    * Toggle death markers on or off.
    * Toggle advancement markers on or off.
-   * Enter comma-separated keywords for the chat listener (e.g., `@titlo10, highlight, raid`).
+   * Enter comma-separated keywords for the chat listener (e.g., `marker, highlight, raid`).
 
 ### 📂 Configuration File
 The settings are saved in your Minecraft directory under `.minecraft/config/replaymod_auto_markers.json`.
@@ -58,7 +58,7 @@ Example structure:
 {
   "enableDeaths": true,
   "enableAchievements": true,
-  "chatKeywords": "@titlo10, highlight, raid"
+  "chatKeywords": "marker, highlight, raid"
 }
 ```
 
