@@ -30,13 +30,13 @@ public class ExampleModClient implements ClientModInitializer {
 
     //#if MC>=260100
     public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(
-        Identifier.fromNamespaceAndPath("modid", "keys")
+        Identifier.fromNamespaceAndPath("automarker", "keys")
     );
     //#endif
 
     //#if MC>=12110 && MC<260100
     //$$ public static final KeyBinding.Category CATEGORY = KeyBinding.Category.create(
-    //$$     Identifier.of("modid", "keys")
+    //$$     Identifier.of("automarker", "keys")
     //$$ );
     //#endif
 
@@ -44,7 +44,7 @@ public class ExampleModClient implements ClientModInitializer {
     public void onInitializeClient() {
         //#if MC>=260100
         configKeyBinding = KeyMappingHelper.registerKeyMapping(new KeyMapping(
-            "key.modid.config", 
+            "key.automarker.config", 
             GLFW.GLFW_KEY_K, 
             CATEGORY
         ));
@@ -52,7 +52,7 @@ public class ExampleModClient implements ClientModInitializer {
 
         //#if MC>=12110 && MC<260100
         //$$ configKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-        //$$     "key.modid.config", 
+        //$$     "key.automarker.config", 
         //$$     GLFW.GLFW_KEY_K, 
         //$$     CATEGORY
         //$$ ));
@@ -60,9 +60,9 @@ public class ExampleModClient implements ClientModInitializer {
 
         //#if MC<12110
         //$$ configKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-        //$$     "key.modid.config", 
+        //$$     "key.automarker.config", 
         //$$     GLFW.GLFW_KEY_K, 
-        //$$     "key.categories.modid"
+        //$$     "key.categories.automarker"
         //$$ ));
         //#endif
 

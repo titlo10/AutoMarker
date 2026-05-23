@@ -29,7 +29,7 @@ base.archivesName.set("AutoMarker")
 
 if (!platform.isUnobfuscated) {
     loom.mixin.useLegacyMixinAp = true
-    loom.mixin.defaultRefmapName.set("modid.refmap.json")
+    loom.mixin.defaultRefmapName.set("automarker.refmap.json")
 }
 
 repositories {

@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "automarker",
 	"version": "${version}",
 	"name": "${name}",
 	"description": "Automatically adds markers to ReplayMod recordings when trigger events occur.",
@@ -8,8 +8,8 @@
 		"Antigravity"
 	],
 	"contact": {},
-	"license": "MIT",
-	"icon": "assets/modid/icon.png",
+	"license": "GPL-3.0-only",
+	"icon": "assets/automarker/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -24,7 +24,7 @@
 	},
 	"mixins": [
 		{
-			"config": "modid.client.mixins.json",
+			"config": "automarker.client.mixins.json",
 			"environment": "client"
 		}
 	],
