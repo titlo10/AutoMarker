@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>Automatically adds markers to ReplayMod recordings in Minecraft when trigger events occur.</strong>
+  <strong>Automatically places markers on ReplayMod recordings when in-game events happen.</strong>
 </p>
 
 <p align="center">
@@ -16,44 +16,34 @@
 
 ---
 
-## 📖 Description
+## 📖 What it does
 
-**AutoMarker** is a utility Fabric mod for Minecraft, specifically designed for content creators, speedrunners, and players using **ReplayMod**. 
-
-The mod automatically places markers on the ReplayMod timeline when specific in-game events occur. No need to manually log timestamps or spend hours searching for highlights in long recordings!
+AutoMarker is a Fabric mod that hooks into ReplayMod and drops timeline markers whenever something noteworthy happens in-game. No more scrubbing through hours of footage looking for that one moment.
 
 ---
 
 ## ✨ Features
 
-The mod currently supports automatic marker generation for the following events:
-
-*   💀 **Player Deaths:** Every time you die, a marker named `"Player Died"` is placed on the recording. Perfect for capturing bloopers and fails.
-*   🏆 **Advancements & Achievements:** Automatically drops a marker like `"Advancement: [Advancement Name]"` when you complete an advancement, allowing you to jump straight to milestone moments.
-*   💬 **Chat Keywords:** The mod monitors the game chat. If a message contains any of your defined keywords (e.g., `marker`), it immediately places a marker like `"Chat: [Keyword]"`. This is extremely useful for:
-    *   Stream/donation integration.
-    *   Quickly bookmarks via typing in chat.
-    *   Tracking specific server plugin logs.
+*   💀 **Player Deaths** — places a `"Player Died"` marker every time you die. Good for bloopers, speedrun resets, or just knowing where it all went wrong.
+*   🏆 **Advancements** — drops a `"Advancement: [Name]"` marker when you complete one. Jump straight to milestone moments without guessing timestamps.
+*   💬 **Chat Keywords** — watches the chat for words you define. When a match appears, it places a `"Chat: [Keyword]"` marker. Handy for stream/donation alerts, quick manual bookmarks, or catching server plugin messages.
 
 ---
 
 ## ⚙️ Configuration
 
-You can customize the mod either via the in-game settings GUI or by editing the configuration file directly.
+### 🎮 In-Game GUI
 
-### 🎮 In-Game Settings GUI
 1. Install **Mod Menu** for Fabric.
-2. Go to the mods list, select **AutoMarker**, and click **Configure**.
-3. Alternatively, press **`K`** (default hotkey) in-game to instantly open the configuration screen.
-4. From the GUI, you can:
-   * Toggle death markers on or off.
-   * Toggle advancement markers on or off.
-   * Enter comma-separated keywords for the chat listener (e.g., `marker, highlight, raid`).
+2. Open the mods list, select **AutoMarker**, and click **Configure**.
+3. Or press **`K`** in-game to open the config screen directly.
 
-### 📂 Configuration File
-The settings are saved in your Minecraft directory under `.minecraft/config/replaymod_auto_markers.json`.
+From there you can toggle death and advancement markers, and enter comma-separated keywords for the chat listener (e.g. `marker, highlight, raid`).
 
-Example structure:
+### 📂 Config File
+
+Settings are saved to `.minecraft/config/replaymod_auto_markers.json`.
+
 ```json
 {
   "enableDeaths": true,
@@ -66,30 +56,27 @@ Example structure:
 
 ## 🚀 Requirements & Installation
 
-To run this mod, you need:
+1. **Minecraft** `1.21+`
+2. **Fabric Loader** `>=0.16.0`
+3. **Fabric API**
+4. **ReplayMod**
 
-1. **Minecraft** `1.21` or newer.
-2. **Fabric Loader** (version `>=0.16.0`).
-3. **Fabric API**.
-4. **ReplayMod**.
-
-Drop the compiled `.jar` file into your `mods` folder.
+Drop the `.jar` into your `mods` folder and you're done.
 
 ---
 
-## 🛠️ Compilation (For Developers)
+## 🛠️ Building from Source
 
-To build the mod from source code:
+```bash
+git clone https://github.com/titlo10/AutoMarker.git
+cd AutoMarker
+./gradlew build
+```
 
-1. Clone this repository.
-2. Open a terminal in the project directory and run:
-   ```bash
-   ./gradlew build
-   ```
-3. The built binaries will be located in the `build/libs` and `build/bundled` folders.
+Output goes to `build/libs` and `build/bundled`.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**. See the [LICENSE](file:///home/titlo10/Desktop/mod/fabric-example-mod/LICENSE) file for details.
+GPL-3.0. See [LICENSE](LICENSE) for details.
