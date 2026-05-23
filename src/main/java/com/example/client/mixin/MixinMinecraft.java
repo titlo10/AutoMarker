@@ -24,7 +24,7 @@ public class MixinMinecraft {
     @Inject(method = "setScreen", at = @At("HEAD"))
     private void onSetScreen(Screen screen, CallbackInfo ci) {
         if (screen instanceof DeathScreen && AutoMarkerMod.config != null && AutoMarkerMod.config.enableDeaths) {
-            AutoMarkerMod.addMarker("Player Died");
+            AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.player_died"));
         }
     }
 }

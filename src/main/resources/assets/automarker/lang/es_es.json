@@ -7,5 +7,8 @@
   "gui.automarker.track_achievements": "Registrar logros",
   "gui.automarker.keywords": "Palabras clave",
   "gui.automarker.chat_keywords_label": "Palabras clave de chat personalizadas (separadas por comas):",
-  "gui.automarker.done": "Hecho"
+  "gui.automarker.done": "Hecho",
+  "marker.automarker.player_died": "Jugador muerto",
+  "marker.automarker.advancement": "Logro: %s",
+  "marker.automarker.chat": "Chat: %s"
 }

@@ -7,5 +7,8 @@
   "gui.automarker.track_achievements": "Erfolge verfolgen",
   "gui.automarker.keywords": "Schlüsselwörter",
   "gui.automarker.chat_keywords_label": "Eigene Chat-Schlüsselwörter (kommagetrennt):",
-  "gui.automarker.done": "Fertig"
+  "gui.automarker.done": "Fertig",
+  "marker.automarker.player_died": "Spieler gestorben",
+  "marker.automarker.advancement": "Erfolg: %s",
+  "marker.automarker.chat": "Chat: %s"
 }

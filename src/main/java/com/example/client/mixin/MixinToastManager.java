@@ -39,7 +39,7 @@ public class MixinToastManager {
                         //#endif
                         if (titleComponent != null) {
                             String title = titleComponent.getString();
-                            AutoMarkerMod.addMarker("Advancement: " + title);
+                            AutoMarkerMod.addAdvancementMarker(title);
                         }
                     });
                 }

@@ -7,5 +7,8 @@
   "gui.automarker.track_achievements": "Track Achievements",
   "gui.automarker.keywords": "Keywords",
   "gui.automarker.chat_keywords_label": "Custom Chat Keywords (comma-separated):",
-  "gui.automarker.done": "Done"
+  "gui.automarker.done": "Done",
+  "marker.automarker.player_died": "Player Died",
+  "marker.automarker.advancement": "Advancement: %s",
+  "marker.automarker.chat": "Chat: %s"
 }

@@ -55,7 +55,7 @@ public class MixinChatComponent {
                 for (String keyword : keywords) {
                     String trimmed = keyword.trim();
                     if (!trimmed.isEmpty() && text.contains(trimmed)) {
-                        AutoMarkerMod.addMarker("Chat: " + trimmed);
+                        AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.chat", trimmed));
                         break; // Trigger at most one marker per chat line
                     }
                 }

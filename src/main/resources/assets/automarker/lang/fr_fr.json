@@ -7,5 +7,8 @@
   "gui.automarker.track_achievements": "Suivre les progrès",
   "gui.automarker.keywords": "Mots-clés",
   "gui.automarker.chat_keywords_label": "Mots-clés de chat personnalisés (séparés par des virgules) :",
-  "gui.automarker.done": "Terminé"
+  "gui.automarker.done": "Terminé",
+  "marker.automarker.player_died": "Joueur mort",
+  "marker.automarker.advancement": "Progrès : %s",
+  "marker.automarker.chat": "Chat : %s"
 }
