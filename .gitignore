@@ -1,0 +1,48 @@
+# gradle
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+*.launch
+
+# idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+.settings/
+.vscode/
+bin/
+.classpath
+.project
+
+# macos
+*.DS_Store
+
+# windows
+Thumbs.db
+ehthumbs.db
+
+# fabric / minecraft dev
+run/
+versions/*/build/
+versions/*/.gradle/
+
+# replaymod sources (external dependency, not part of this repo)
+replaymod-source/
+
+# temporary debug / log files created during development
+*.log
+build_output*.txt
+client_deps.txt
+compile_errors*.txt
+
+# java crash / profiling
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr

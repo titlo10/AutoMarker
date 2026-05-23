@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "modid",
+	"version": "${version}",
+	"name": "${name}",
+	"description": "Automatically adds markers to ReplayMod recordings when trigger events occur.",
+	"authors": [
+		"Antigravity"
+	],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.example.ExampleMod"
+		],
+		"client": [
+			"com.example.client.ExampleModClient"
+		],
+		"modmenu": [
+			"com.example.client.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		{
+			"config": "modid.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": ">=1.21",
+		"java": ">=21",
+		"fabric-api": "*",
+		"replaymod": "*"
+	}
+}

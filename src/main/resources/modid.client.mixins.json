@@ -1,0 +1,21 @@
+{
+	"required": true,
+	"package": "com.example.client.mixin",
+	//#if MC>=260100
+	"compatibilityLevel": "JAVA_25",
+	//#else
+	//$$ "compatibilityLevel": "JAVA_21",
+	//#endif
+	"client": [
+		"MixinMinecraft",
+		"MixinToastManager",
+		"AdvancementToastAccessor",
+		"MixinChatComponent"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
