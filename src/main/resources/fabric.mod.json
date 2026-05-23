@@ -5,9 +5,12 @@
 	"name": "${name}",
 	"description": "Automatically adds markers to ReplayMod recordings when trigger events occur.",
 	"authors": [
-		"Antigravity"
+		"titlo10"
 	],
-	"contact": {},
+	"contact": {
+		"issues": "https://github.com/titlo10/AutoMarker/issues",
+		"sources": "https://github.com/titlo10/AutoMarker"
+	},
 	"license": "GPL-3.0-only",
 	"icon": "assets/automarker/icon.png",
 	"environment": "*",
