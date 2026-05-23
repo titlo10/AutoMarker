@@ -18,7 +18,7 @@ public class AutoMarkerConfig {
 
     public boolean enableDeaths = true;
     public boolean enableAchievements = true;
-    public String chatKeywords = "@titlo10";
+    public String chatKeywords = "";
 
     public static AutoMarkerConfig load() {
         if (CONFIG_FILE.exists()) {
