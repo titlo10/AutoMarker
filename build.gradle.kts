@@ -136,14 +136,23 @@ tasks.register("printSourceSets") {
 tasks.processResources {
     val formattedName = "AutoMarker $mcRange"
     val fullVersion = "$mcRange-$modVersion"
+    val mcDependency = when {
+        mcRange.contains("-") -> {
+            val parts = mcRange.split("-")
+            ">=${parts[0]} <=${parts[1]}"
+        }
+        else -> mcRange
+    }
 
     inputs.property("name", formattedName)
     inputs.property("version", fullVersion)
+    inputs.property("minecraftDependency", mcDependency)
 
     filesMatching("fabric.mod.json") {
         expand(mapOf(
             "name" to formattedName,
-            "version" to fullVersion
+            "version" to fullVersion,
+            "minecraftDependency" to mcDependency
         ))
     }
 }
