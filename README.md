@@ -72,7 +72,6 @@ To run this mod, you need:
 2. **Fabric Loader** (version `>=0.16.0`).
 3. **Fabric API**.
 4. **ReplayMod**.
-5. **Mod Menu** *(recommended for GUI configuration)*.
 
 Drop the compiled `.jar` file into your `mods` folder.
 
