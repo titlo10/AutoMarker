@@ -1,48 +1,47 @@
-# 🎥 AutoMarker
+# AutoMarker
 
 <p align="center">
   <img src="src/main/resources/assets/automarker/icon.png" alt="AutoMarker Logo" width="128" height="128" />
 </p>
 
 <p align="center">
-  <strong>Automatically places markers on ReplayMod recordings when in-game events happen.</strong>
+  <strong>Automatically places markers on ReplayMod recordings when in-game events occur.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Minecraft-1.21%2B-blue?style=for-the-badge&logo=minecraft" alt="Minecraft Version" />
+  <img src="https://img.shields.io/badge/Minecraft-1.20%2B-blue?style=for-the-badge&logo=minecraft" alt="Minecraft Version" />
   <img src="https://img.shields.io/badge/Loader-Fabric-lightgrey?style=for-the-badge&logo=appveyor" alt="Fabric Loader" />
   <img src="https://img.shields.io/badge/License-GPL--3.0-green?style=for-the-badge" alt="License" />
 </p>
 
 ---
 
-## 📖 What it does
+## Description
 
-AutoMarker is a Fabric mod that hooks into ReplayMod and drops timeline markers whenever something noteworthy happens in-game. No more scrubbing through hours of footage looking for that one moment.
-
----
-
-## ✨ Features
-
-*   💀 **Player Deaths** — places a `"Player Died"` marker every time you die. Good for bloopers, speedrun resets, or just knowing where it all went wrong.
-*   🏆 **Advancements** — drops a `"Advancement: [Name]"` marker when you complete one. Jump straight to milestone moments without guessing timestamps.
-*   💬 **Chat Keywords** — watches the chat for words you define. When a match appears, it places a `"Chat: [Keyword]"` marker. Handy for stream/donation alerts, quick manual bookmarks, or catching server plugin messages.
+AutoMarker is a Fabric mod that hooks into ReplayMod to place timeline markers during in-game events. This simplifies editing by helping you find key moments without searching through hours of footage.
 
 ---
 
-## ⚙️ Configuration
+## Features
 
-### 🎮 In-Game GUI
+- **Player Deaths** - Places a "Player Died" marker when you die.
+- **Advancements** - Places an "Advancement: [Name]" marker upon completing any advancement.
+- **Chat Keywords** - Places a "Chat: [Keyword]" marker when specified words appear in the chat. Useful for stream alerts, bookmarks, or tracking specific server messages.
 
-1. Install **Mod Menu** for Fabric.
-2. Open the mods list, select **AutoMarker**, and click **Configure**.
-3. Or press **`K`** in-game to open the config screen directly.
+---
 
-From there you can toggle death and advancement markers, and enter comma-separated keywords for the chat listener (e.g. `marker, highlight, raid`).
+## Configuration
 
-### 📂 Config File
+### In-Game GUI
 
-Settings are saved to `.minecraft/config/replaymod_auto_markers.json`.
+1. Install Mod Menu for Fabric.
+2. Select AutoMarker in the mods list and click Configure, or press **K** in-game to open the configuration screen directly.
+
+From the GUI you can toggle death/advancement markers and manage the comma-separated chat keywords.
+
+### Config File
+
+Settings are saved to `.minecraft/config/replaymod_auto_markers.json`:
 
 ```json
 {
@@ -54,18 +53,18 @@ Settings are saved to `.minecraft/config/replaymod_auto_markers.json`.
 
 ---
 
-## 🚀 Requirements & Installation
+## Requirements
 
-1. **Minecraft** `1.21+`
+1. **Minecraft** `1.20+`
 2. **Fabric Loader** `>=0.16.0`
 3. **Fabric API**
 4. **ReplayMod**
 
-Drop the `.jar` into your `mods` folder and you're done.
+To install, place the compiled `.jar` file into your `mods` folder.
 
 ---
 
-## 🛠️ Building from Source
+## Building from Source
 
 ```bash
 git clone https://github.com/titlo10/AutoMarker.git
@@ -73,10 +72,10 @@ cd AutoMarker
 ./gradlew bundleJar
 ```
 
-Output goes to `build/libs` and `build/bundled`.
+Built jars are located in `build/libs` and `build/bundled`.
 
 ---
 
-## 📄 License
+## License
 
-GPL-3.0. See [LICENSE](LICENSE) for details.
+This project is licensed under the GPL-3.0 License. See the LICENSE file for details.

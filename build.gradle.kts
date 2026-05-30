@@ -19,6 +19,10 @@ val mcRange = when (project.name) {
     "1.21.7" -> "1.21.6-1.21.8"
     "1.21.10" -> "1.21.9-1.21.10"
     "26.1" -> "26.1.x"
+    "1.20.6" -> "1.20.5-1.20.6"
+    "1.20.4" -> "1.20.3-1.20.4"
+    "1.20.2" -> "1.20.2"
+    "1.20.1" -> "1.20-1.20.1"
     else -> project.name
 }
 val modVersion = "1.0.0"
@@ -45,6 +49,10 @@ dependencies {
         mcVersion >= 12104 -> "0.111.0+1.21.4"
         mcVersion >= 12102 -> "0.106.1+1.21.2"
         mcVersion >= 12100 -> "0.100.3+1.21"
+        mcVersion >= 12006 -> "0.100.8+1.20.6"
+        mcVersion >= 12004 -> "0.97.3+1.20.4"
+        mcVersion >= 12002 -> "0.91.6+1.20.2"
+        mcVersion >= 12000 -> "0.92.6+1.20.1"
         else -> throw UnsupportedOperationException("Unsupported MC version: $mcVersion")
     }
 
@@ -77,6 +85,10 @@ dependencies {
         mcVersion >= 12104 -> "13.0.0-beta.1"
         mcVersion >= 12102 -> "12.0.0-beta.1"
         mcVersion >= 12100 -> "11.0.0-rc.4"
+        mcVersion >= 12006 -> "10.0.0-beta.1"
+        mcVersion >= 12004 -> "9.0.0"
+        mcVersion >= 12002 -> "8.0.1"
+        mcVersion >= 12000 -> "7.2.2"
         else -> null
     }
     if (modMenuVersion != null) {
@@ -114,14 +126,22 @@ val bundleJar by tasks.registering(Copy::class) {
 }
 
 java {
-    val javaVersion = if (mcVersion >= 26_01_00) JavaVersion.VERSION_25 else JavaVersion.VERSION_21
+    val javaVersion = when {
+        mcVersion >= 26_01_00 -> JavaVersion.VERSION_25
+        mcVersion >= 12005 -> JavaVersion.VERSION_21
+        else -> JavaVersion.VERSION_17
+    }
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
     withSourcesJar()
 }
 
 tasks.withType<JavaCompile> {
-    val javaVersion = if (mcVersion >= 26_01_00) 25 else 21
+    val javaVersion = when {
+        mcVersion >= 26_01_00 -> 25
+        mcVersion >= 12005 -> 21
+        else -> 17
+    }
     options.release.set(javaVersion)
 }
 
@@ -143,16 +163,23 @@ tasks.processResources {
         }
         else -> mcRange
     }
+    val javaDependency = when {
+        mcVersion >= 26_01_00 -> "25"
+        mcVersion >= 12005 -> "21"
+        else -> "17"
+    }
 
     inputs.property("name", formattedName)
     inputs.property("version", fullVersion)
     inputs.property("minecraftDependency", mcDependency)
+    inputs.property("javaDependency", javaDependency)
 
     filesMatching("fabric.mod.json") {
         expand(mapOf(
             "name" to formattedName,
             "version" to fullVersion,
-            "minecraftDependency" to mcDependency
+            "minecraftDependency" to mcDependency,
+            "javaDependency" to javaDependency
         ))
     }
 }

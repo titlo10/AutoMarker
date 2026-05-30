@@ -11,7 +11,11 @@ import net.minecraft.network.chat.Component;
 //$$ import net.minecraft.client.toast.ToastManager;
 //$$ import net.minecraft.client.toast.Toast;
 //$$ import net.minecraft.client.toast.AdvancementToast;
+//#if MC>=12002
 //$$ import net.minecraft.advancement.AdvancementEntry;
+//#else
+//$$ import net.minecraft.advancement.Advancement;
+//#endif
 //$$ import net.minecraft.text.Text;
 //#endif
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,22 +31,41 @@ public class MixinToastManager {
             try {
                 //#if MC>=260100
                 AdvancementHolder entry = ((AdvancementToastAccessor) toast).getAdvancement();
-                //#else
-                //$$ AdvancementEntry entry = ((AdvancementToastAccessor) toast).getAdvancement();
-                //#endif
                 if (entry != null && entry.value() != null) {
                     entry.value().display().ifPresent(display -> {
-                        //#if MC>=260100
                         Component titleComponent = display.getTitle();
-                        //#else
-                        //$$ Text titleComponent = display.getTitle();
-                        //#endif
                         if (titleComponent != null) {
                             String title = titleComponent.getString();
                             AutoMarkerMod.addAdvancementMarker(title);
                         }
                     });
                 }
+                //#else
+                //#if MC>=12002
+                //$$ AdvancementEntry entry = ((AdvancementToastAccessor) toast).getAdvancement();
+                //$$ if (entry != null && entry.value() != null) {
+                //$$     entry.value().display().ifPresent(display -> {
+                //$$         Text titleComponent = display.getTitle();
+                //$$         if (titleComponent != null) {
+                //$$             String title = titleComponent.getString();
+                //$$             AutoMarkerMod.addAdvancementMarker(title);
+                //$$         }
+                //$$     });
+                //$$ }
+                //#else
+                //$$ Advancement entry = ((AdvancementToastAccessor) toast).getAdvancement();
+                //$$ if (entry != null) {
+                //$$     net.minecraft.advancement.AdvancementDisplay display = entry.getDisplay();
+                //$$     if (display != null) {
+                //$$         Text titleComponent = display.getTitle();
+                //$$         if (titleComponent != null) {
+                //$$             String title = titleComponent.getString();
+                //$$             AutoMarkerMod.addAdvancementMarker(title);
+                //$$         }
+                //$$     }
+                //$$ }
+                //#endif
+                //#endif
             } catch (Throwable t) {
             }
         }

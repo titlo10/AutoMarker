@@ -34,7 +34,7 @@
 	"depends": {
 		"fabricloader": ">=0.16.0",
 		"minecraft": "${minecraftDependency}",
-		"java": ">=21",
+		"java": ">=${javaDependency}",
 		"fabric-api": "*",
 		"replaymod": "*"
 	}

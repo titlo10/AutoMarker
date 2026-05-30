@@ -49,6 +49,10 @@ preprocess {
     val mc12104 = createNode("1.21.4", 12104, "yarn")
     val mc12102 = createNode("1.21.2", 12102, "yarn")
     val mc12100 = createNode("1.21", 12100, "yarn")
+    val mc12006 = createNode("1.20.6", 12006, "yarn")
+    val mc12004 = createNode("1.20.4", 12004, "yarn")
+    val mc12002 = createNode("1.20.2", 12002, "yarn")
+    val mc12001 = createNode("1.20.1", 12001, "yarn")
 
     mc26_01_00.link(mc12111, file("versions/mapping-fabric-26.1-1.21.11.txt"))
     mc12111.link(mc12110, file("versions/mapping-fabric-1.21.11-1.21.10.txt"))
@@ -57,4 +61,8 @@ preprocess {
     mc12105.link(mc12104, file("versions/mapping-fabric-1.21.5-1.21.4.txt"))
     mc12104.link(mc12102)
     mc12102.link(mc12100)
+    mc12100.link(mc12006)
+    mc12006.link(mc12004)
+    mc12004.link(mc12002, file("versions/mapping-fabric-1.20.4-1.20.2.txt"))
+    mc12002.link(mc12001)
 }
