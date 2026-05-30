@@ -3,6 +3,7 @@ package com.titlo10.automarker.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import org.lwjgl.glfw.GLFW;
+import com.titlo10.automarker.AutoMarkerMod;
 
 //#if MC>=260100
 import net.minecraft.client.KeyMapping;
@@ -27,6 +28,8 @@ public class AutoMarkerClient implements ClientModInitializer {
     //#else
     //$$ private static KeyBinding configKeyBinding;
     //#endif
+
+    private static String lastDimension = null;
 
     //#if MC>=260100
     public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(
@@ -72,6 +75,36 @@ public class AutoMarkerClient implements ClientModInitializer {
                 client.setScreen(new AutoMarkerConfigScreen(client.screen));
                 //#else
                 //$$ client.setScreen(new AutoMarkerConfigScreen(client.currentScreen));
+                //#endif
+            }
+
+            if (AutoMarkerMod.config != null && AutoMarkerMod.config.enableDimensionChanges) {
+                //#if MC>=260100
+                if (client.player != null && client.level != null) {
+                    String currentDim = client.level.dimension().identifier().toString();
+                    if (lastDimension == null) {
+                        lastDimension = currentDim;
+                    } else if (!lastDimension.equals(currentDim)) {
+                        lastDimension = currentDim;
+                        String cleanName = currentDim.contains(":") ? currentDim.split(":")[1] : currentDim;
+                        AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.dimension_change", cleanName));
+                    }
+                } else if (client.player == null) {
+                    lastDimension = null;
+                }
+                //#else
+                //$$ if (client.player != null && client.world != null) {
+                //$$     String currentDim = client.world.getRegistryKey().getValue().toString();
+                //$$     if (lastDimension == null) {
+                //$$         lastDimension = currentDim;
+                //$$     } else if (!lastDimension.equals(currentDim)) {
+                //$$         lastDimension = currentDim;
+                //$$         String cleanName = currentDim.contains(":") ? currentDim.split(":")[1] : currentDim;
+                //$$         AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.dimension_change", cleanName));
+                //$$     }
+                //$$ } else if (client.player == null) {
+                //$$     lastDimension = null;
+                //$$ }
                 //#endif
             }
         });

@@ -18,6 +18,8 @@ public class AutoMarkerConfig {
 
     public boolean enableDeaths = true;
     public boolean enableAchievements = true;
+    public boolean enablePvpKills = true;
+    public boolean enableDimensionChanges = true;
     public String chatKeywords = "";
 
     public static AutoMarkerConfig load() {

@@ -14,7 +14,9 @@
 		"MixinMinecraft",
 		"MixinToastManager",
 		"AdvancementToastAccessor",
-		"MixinChatComponent"
+		"MixinChatComponent",
+		"MixinMultiPlayerGameMode",
+		"MixinClientPacketListener"
 	],
 	"injectors": {
 		"defaultRequire": 1

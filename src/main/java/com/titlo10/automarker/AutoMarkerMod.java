@@ -20,6 +20,38 @@ public class AutoMarkerMod {
     private static final List<String> pendingAdvancements = new ArrayList<>();
     private static boolean isScheduled = false;
 
+    private static int lastAttackedEntityId = -1;
+    private static String lastAttackedEntityName = "";
+    private static long lastAttackTime = 0;
+
+    private static String lastKilledPlayer = "";
+    private static long lastKillTime = 0;
+
+    public static void registerAttack(int entityId, String name) {
+        lastAttackedEntityId = entityId;
+        lastAttackedEntityName = name;
+        lastAttackTime = System.currentTimeMillis();
+    }
+
+    public static void checkPvPKill(int entityId) {
+        if (entityId == lastAttackedEntityId && (System.currentTimeMillis() - lastAttackTime) < 3000) {
+            onPlayerKilled(lastAttackedEntityName);
+            lastAttackedEntityId = -1;
+            lastAttackedEntityName = "";
+            lastAttackTime = 0;
+        }
+    }
+
+    public static void onPlayerKilled(String victimName) {
+        long now = System.currentTimeMillis();
+        if (victimName.equals(lastKilledPlayer) && (now - lastKillTime) < 2000) {
+            return;
+        }
+        lastKilledPlayer = victimName;
+        lastKillTime = now;
+        addMarker(getTranslation("marker.automarker.player_killed", victimName));
+    }
+
     public static void initialize() {
         config = AutoMarkerConfig.load();
     }
@@ -74,6 +106,8 @@ public class AutoMarkerMod {
             return format;
         } catch (Throwable t) {
             if (key.equals("marker.automarker.player_died")) return "Player Died";
+            if (key.equals("marker.automarker.player_killed")) return "Killed player: " + (args.length > 0 ? args[0] : "");
+            if (key.equals("marker.automarker.dimension_change")) return "Dimension: " + (args.length > 0 ? args[0] : "");
             if (key.equals("marker.automarker.advancement")) return "Advancement: " + (args.length > 0 ? args[0] : "");
             if (key.equals("marker.automarker.chat")) return "Chat: " + (args.length > 0 ? args[0] : "");
             return key;

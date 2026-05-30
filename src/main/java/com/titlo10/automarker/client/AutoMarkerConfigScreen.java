@@ -60,13 +60,25 @@ public class AutoMarkerConfigScreen extends Screen {
             })
         );
 
-        this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 70, 200, 20, Component.translatable("gui.automarker.keywords"));
+        this.addRenderableWidget(CycleButton.onOffBuilder(config.enablePvpKills)
+            .create(x - 100, y + 50, 200, 20, Component.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
+                config.enablePvpKills = value;
+            })
+        );
+
+        this.addRenderableWidget(CycleButton.onOffBuilder(config.enableDimensionChanges)
+            .create(x - 100, y + 75, 200, 20, Component.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
+                config.enableDimensionChanges = value;
+            })
+        );
+
+        this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 120, 200, 20, Component.translatable("gui.automarker.keywords"));
         this.chatKeywordsEdit.setValue(config.chatKeywords);
         this.addRenderableWidget(this.chatKeywordsEdit);
 
         this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.done"), button -> {
             onClose();
-        }).bounds(x - 100, y + 110, 200, 20).build());
+        }).bounds(x - 100, y + 155, 200, 20).build());
         //#else
         //$$ // Toggle Deaths button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDeaths)
@@ -82,15 +94,29 @@ public class AutoMarkerConfigScreen extends Screen {
         //$$     })
         //$$ );
         //$$
+        //$$ // Toggle PvP Kills button
+        //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enablePvpKills)
+        //$$     .build(x - 100, y + 50, 200, 20, Text.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
+        //$$         config.enablePvpKills = value;
+        //$$     })
+        //$$ );
+        //$$
+        //$$ // Toggle Dimension Changes button
+        //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDimensionChanges)
+        //$$     .build(x - 100, y + 75, 200, 20, Text.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
+        //$$         config.enableDimensionChanges = value;
+        //$$     })
+        //$$ );
+        //$$
         //$$ // Text field input for chat keywords
-        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, x - 100, y + 70, 200, 20, Text.translatable("gui.automarker.keywords"));
+        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, x - 100, y + 120, 200, 20, Text.translatable("gui.automarker.keywords"));
         //$$ this.chatKeywordsEdit.setText(config.chatKeywords);
         //$$ this.addDrawableChild(this.chatKeywordsEdit);
         //$$
         //$$ // Done button
         //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.done"), button -> {
         //$$     close();
-        //$$ }).dimensions(x - 100, y + 110, 200, 20).build());
+        //$$ }).dimensions(x - 100, y + 155, 200, 20).build());
         //#endif
     }
 
@@ -102,7 +128,7 @@ public class AutoMarkerConfigScreen extends Screen {
         int y = this.height / 4;
         graphics.text(this.font, this.title, x - this.font.width(this.title) / 2, y - 20, 0xFFFFFFFF);
         Component label = Component.translatable("gui.automarker.chat_keywords_label");
-        graphics.text(this.font, label, x - 100, y + 55, 0xFFA0A0A0);
+        graphics.text(this.font, label, x - 100, y + 105, 0xFFA0A0A0);
     }
     //#else
     //$$ @Override
@@ -112,7 +138,7 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$     int y = this.height / 4;
     //$$     context.drawTextWithShadow(this.textRenderer, this.title, x - this.textRenderer.getWidth(this.title) / 2, y - 20, 0xFFFFFFFF);
     //$$     Text label = Text.translatable("gui.automarker.chat_keywords_label");
-    //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 55, 0xFFA0A0A0);
+    //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 105, 0xFFA0A0A0);
     //$$ }
     //#endif
 

@@ -5,10 +5,14 @@
   "gui.automarker.title": "ReplayMod Auto-Marker設定",
   "gui.automarker.track_deaths": "プレイヤーの死亡を記録する",
   "gui.automarker.track_achievements": "実績を記録する",
+  "gui.automarker.track_pvp_kills": "Track PvP Kills",
+  "gui.automarker.track_dimension_changes": "Track Dimension Changes",
   "gui.automarker.keywords": "キーワード",
   "gui.automarker.chat_keywords_label": "カスタムチャットキーワード（カンマ区切り）:",
   "gui.automarker.done": "完了",
   "marker.automarker.player_died": "プレイヤーが死亡しました",
+  "marker.automarker.player_killed": "Killed player: %s",
+  "marker.automarker.dimension_change": "Dimension: %s",
   "marker.automarker.advancement": "進捗: %s",
   "marker.automarker.chat": "チャット: %s"
 }
