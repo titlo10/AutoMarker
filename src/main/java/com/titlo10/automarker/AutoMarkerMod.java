@@ -1,4 +1,4 @@
-package com.example;
+package com.titlo10.automarker;
 
 import com.replaymod.recording.ReplayModRecording;
 import com.replaymod.recording.packet.PacketListener;
@@ -30,11 +30,11 @@ public class AutoMarkerMod {
                 PacketListener packetListener = ReplayModRecording.instance.getConnectionEventHandler().getPacketListener();
                 if (packetListener != null) {
                     packetListener.addMarker(name);
-                    ExampleMod.LOGGER.info("Added automatic marker: {}", name);
+                    AutoMarker.LOGGER.info("Added automatic marker: {}", name);
                 }
             }
         } catch (Throwable t) {
-            ExampleMod.LOGGER.error("Failed to add auto-marker: " + name, t);
+            AutoMarker.LOGGER.error("Failed to add auto-marker: " + name, t);
         }
     }
 

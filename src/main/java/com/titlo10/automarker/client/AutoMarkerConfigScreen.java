@@ -1,7 +1,7 @@
-package com.example.client;
+package com.titlo10.automarker.client;
 
-import com.example.AutoMarkerConfig;
-import com.example.AutoMarkerMod;
+import com.titlo10.automarker.AutoMarkerConfig;
+import com.titlo10.automarker.AutoMarkerMod;
 
 //#if MC>=260100
 import net.minecraft.client.Minecraft;
@@ -48,26 +48,22 @@ public class AutoMarkerConfigScreen extends Screen {
         int y = this.height / 4;
 
         //#if MC>=260100
-        // Toggle Deaths button
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableDeaths)
             .create(x - 100, y, 200, 20, Component.translatable("gui.automarker.track_deaths"), (button, value) -> {
                 config.enableDeaths = value;
             })
         );
 
-        // Toggle Achievements button
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableAchievements)
             .create(x - 100, y + 25, 200, 20, Component.translatable("gui.automarker.track_achievements"), (button, value) -> {
                 config.enableAchievements = value;
             })
         );
 
-        // Text field input for chat keywords
         this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 70, 200, 20, Component.translatable("gui.automarker.keywords"));
         this.chatKeywordsEdit.setValue(config.chatKeywords);
         this.addRenderableWidget(this.chatKeywordsEdit);
 
-        // Done button
         this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.done"), button -> {
             onClose();
         }).bounds(x - 100, y + 110, 200, 20).build());

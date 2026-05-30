@@ -1,6 +1,6 @@
-package com.example.client.mixin;
+package com.titlo10.automarker.client.mixin;
 
-import com.example.AutoMarkerMod;
+import com.titlo10.automarker.AutoMarkerMod;
 //#if MC>=260100
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -44,7 +44,6 @@ public class MixinToastManager {
                     });
                 }
             } catch (Throwable t) {
-                // Prevent crash if accessor fails
             }
         }
     }

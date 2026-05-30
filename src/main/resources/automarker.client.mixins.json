@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "com.example.client.mixin",
+	"package": "com.titlo10.automarker.client.mixin",
 	//#if MC>=260100
 	"compatibilityLevel": "JAVA_25",
 	//#else

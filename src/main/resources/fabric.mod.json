@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"com.titlo10.automarker.AutoMarker"
 		],
 		"client": [
-			"com.example.client.ExampleModClient"
+			"com.titlo10.automarker.client.AutoMarkerClient"
 		],
 		"modmenu": [
-			"com.example.client.ModMenuIntegration"
+			"com.titlo10.automarker.client.ModMenuIntegration"
 		]
 	},
 	"mixins": [

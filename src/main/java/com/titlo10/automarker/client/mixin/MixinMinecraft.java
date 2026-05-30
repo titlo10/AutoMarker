@@ -1,6 +1,6 @@
-package com.example.client.mixin;
+package com.titlo10.automarker.client.mixin;
 
-import com.example.AutoMarkerMod;
+import com.titlo10.automarker.AutoMarkerMod;
 //#if MC>=260100
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;

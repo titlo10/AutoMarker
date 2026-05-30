@@ -1,4 +1,4 @@
-package com.example.client;
+package com.titlo10.automarker.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -21,7 +21,7 @@ import net.minecraft.resources.Identifier;
 //$$ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 //#endif
 
-public class ExampleModClient implements ClientModInitializer {
+public class AutoMarkerClient implements ClientModInitializer {
     //#if MC>=260100
     private static KeyMapping configKeyBinding;
     //#else

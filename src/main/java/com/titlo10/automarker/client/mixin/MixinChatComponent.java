@@ -1,6 +1,6 @@
-package com.example.client.mixin;
+package com.titlo10.automarker.client.mixin;
 
-import com.example.AutoMarkerMod;
+import com.titlo10.automarker.AutoMarkerMod;
 //#if MC>=260100
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.Component;
@@ -56,7 +56,7 @@ public class MixinChatComponent {
                     String trimmed = keyword.trim();
                     if (!trimmed.isEmpty() && text.contains(trimmed)) {
                         AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.chat", trimmed));
-                        break; // Trigger at most one marker per chat line
+                        break;
                     }
                 }
             }

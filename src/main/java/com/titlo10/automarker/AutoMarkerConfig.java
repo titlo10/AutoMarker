@@ -1,4 +1,4 @@
-package com.example;
+package com.titlo10.automarker;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,7 +28,7 @@ public class AutoMarkerConfig {
                     return config;
                 }
             } catch (IOException e) {
-                ExampleMod.LOGGER.error("Failed to load auto-marker config", e);
+                AutoMarker.LOGGER.error("Failed to load auto-marker config", e);
             }
         }
         AutoMarkerConfig defaultConfig = new AutoMarkerConfig();
@@ -40,7 +40,7 @@ public class AutoMarkerConfig {
         try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
             GSON.toJson(this, writer);
         } catch (IOException e) {
-            ExampleMod.LOGGER.error("Failed to save auto-marker config", e);
+            AutoMarker.LOGGER.error("Failed to save auto-marker config", e);
         }
     }
 }

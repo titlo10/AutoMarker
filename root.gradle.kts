@@ -3,7 +3,7 @@ plugins {
     id("gg.essential.loom") version "1.15.48" apply false
 }
 
-group = "com.example"
+group = "com.titlo10"
 version = "1.0.0"
 
 val bundleJar by tasks.registering(Copy::class) {

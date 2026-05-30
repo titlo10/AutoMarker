@@ -1,4 +1,4 @@
-package com.example.client;
+package com.titlo10.automarker.client;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

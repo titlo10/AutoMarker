@@ -1,4 +1,4 @@
-package com.example.client.mixin;
+package com.titlo10.automarker.client.mixin;
 
 //#if MC>=260100
 import net.minecraft.client.gui.components.toasts.AdvancementToast;
