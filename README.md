@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>Automatically places markers on ReplayMod recordings when in-game events occur.</strong>
+  <strong>A Fabric mod that drops markers on ReplayMod timelines when in-game events happen.</strong>
 </p>
 
 <p align="center">
@@ -16,28 +16,19 @@
 
 ---
 
-## Description
-
-AutoMarker is a Fabric mod that hooks into ReplayMod to place timeline markers during in-game events. This simplifies editing by helping you find key moments without searching through hours of footage.
-
----
+AutoMarker hooks into ReplayMod and tags your timeline as things happen. Beats scrubbing through a three-hour recording to find the death, advancement, or chat message you actually care about.
 
 ## Features
 
-- **Player Deaths** - Places a "Player Died" marker when you die.
-- **Advancements** - Places an "Advancement: [Name]" marker upon completing any advancement.
-- **Chat Keywords** - Places a "Chat: [Keyword]" marker when specified words appear in the chat. Useful for stream alerts, bookmarks, or tracking specific server messages.
-
----
+- **Player Deaths** — Drops a "Player Died" marker when you die.
+- **Advancements** — Drops an "Advancement: [Name]" marker on completion.
+- **Chat Keywords** — Drops a "Chat: [Keyword]" marker when specific words hit chat. Good for stream alerts, raid calls, or anything else worth bookmarking.
 
 ## Configuration
 
 ### In-Game GUI
 
-1. Install Mod Menu for Fabric.
-2. Select AutoMarker in the mods list and click Configure, or press **K** in-game to open the configuration screen directly.
-
-From the GUI you can toggle death/advancement markers and manage the comma-separated chat keywords.
+Install Mod Menu, open AutoMarker's config from the mods list — or press **K** in-game. Toggle death/advancement markers and set your chat keywords (comma-separated) from there.
 
 ### Config File
 
@@ -51,18 +42,14 @@ Settings are saved to `.minecraft/config/replaymod_auto_markers.json`:
 }
 ```
 
----
-
 ## Requirements
 
-1. **Minecraft** `1.20+`
-2. **Fabric Loader** `>=0.16.0`
-3. **Fabric API**
-4. **ReplayMod**
+- **Minecraft** 1.20+
+- **Fabric Loader** ≥ 0.16.0
+- **Fabric API**
+- **ReplayMod**
 
-To install, place the compiled `.jar` file into your `mods` folder.
-
----
+Drop the compiled `.jar` into your `mods` folder.
 
 ## Building from Source
 
@@ -72,10 +59,8 @@ cd AutoMarker
 ./gradlew bundleJar
 ```
 
-Built jars are located in `build/libs` and `build/bundled`.
-
----
+Jars land in `build/libs` and `build/bundled`.
 
 ## License
 
-This project is licensed under the GPL-3.0 License. See the LICENSE file for details.
+GPL-3.0. See [LICENSE](LICENSE) for details.
