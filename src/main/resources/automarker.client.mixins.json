@@ -11,12 +11,10 @@
 	//#endif
 	//#endif
 	"client": [
-		"MixinMinecraft",
 		"MixinToastManager",
 		"AdvancementToastAccessor",
 		"MixinChatComponent",
-		"MixinMultiPlayerGameMode",
-		"MixinClientPacketListener"
+		"MixinLocalPlayer"
 	],
 	"injectors": {
 		"defaultRequire": 1

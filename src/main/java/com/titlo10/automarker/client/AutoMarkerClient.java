@@ -2,6 +2,7 @@ package com.titlo10.automarker.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import org.lwjgl.glfw.GLFW;
 import com.titlo10.automarker.AutoMarkerMod;
 
@@ -45,6 +46,10 @@ public class AutoMarkerClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            lastDimension = null;
+        });
+
         //#if MC>=260100
         configKeyBinding = KeyMappingHelper.registerKeyMapping(new KeyMapping(
             "key.automarker.config", 
@@ -89,8 +94,6 @@ public class AutoMarkerClient implements ClientModInitializer {
                         String cleanName = currentDim.contains(":") ? currentDim.split(":")[1] : currentDim;
                         AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.dimension_change", cleanName));
                     }
-                } else if (client.player == null) {
-                    lastDimension = null;
                 }
                 //#else
                 //$$ if (client.player != null && client.world != null) {
@@ -102,8 +105,6 @@ public class AutoMarkerClient implements ClientModInitializer {
                 //$$         String cleanName = currentDim.contains(":") ? currentDim.split(":")[1] : currentDim;
                 //$$         AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.dimension_change", cleanName));
                 //$$     }
-                //$$ } else if (client.player == null) {
-                //$$     lastDimension = null;
                 //$$ }
                 //#endif
             }

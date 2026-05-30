@@ -48,57 +48,6 @@ public class MixinChatComponent {
     //$$ private void handleChatMessage(Text message) {
     //#endif
         if (message != null && AutoMarkerMod.config != null) {
-            if (AutoMarkerMod.config.enablePvpKills) {
-                //#if MC>=260100
-                if (message.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents) {
-                    net.minecraft.network.chat.contents.TranslatableContents translatable = (net.minecraft.network.chat.contents.TranslatableContents) message.getContents();
-                    String key = translatable.getKey();
-                    if (key.startsWith("death.attack.")) {
-                        Object[] args = translatable.getArgs();
-                        if (args.length > 1 && args[1] instanceof net.minecraft.network.chat.Component) {
-                            String killerName = ((net.minecraft.network.chat.Component) args[1]).getString();
-                            net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
-                            if (minecraft.player != null) {
-                                String localPlayerName = minecraft.player.getName().getString();
-                                if (localPlayerName.equals(killerName)) {
-                                    String victimName = args[0] instanceof net.minecraft.network.chat.Component
-                                        ? ((net.minecraft.network.chat.Component) args[0]).getString()
-                                        : args[0].toString();
-                                    AutoMarkerMod.onPlayerKilled(victimName);
-                                }
-                            }
-                        }
-                    }
-                }
-                //#else
-                //$$ if (message.getContent() instanceof net.minecraft.text.TranslatableTextContent) {
-                //$$     net.minecraft.text.TranslatableTextContent translatable = (net.minecraft.text.TranslatableTextContent) message.getContent();
-                //$$     String key = translatable.getKey();
-                //$$     if (key.startsWith("death.attack.")) {
-                //$$         Object[] args = translatable.getArgs();
-                //$$         if (args.length > 1) {
-                //$$             String killerName = "";
-                //$$             if (args[1] instanceof net.minecraft.text.Text) {
-                //$$                 killerName = ((net.minecraft.text.Text) args[1]).getString();
-                //$$             } else {
-                //$$                 killerName = args[1].toString();
-                //$$             }
-                //$$             net.minecraft.client.MinecraftClient client = net.minecraft.client.MinecraftClient.getInstance();
-                //$$             if (client.player != null) {
-                //$$                 String localPlayerName = client.player.getName().getString();
-                //$$                 if (localPlayerName.equals(killerName)) {
-                //$$                     String victimName = args[0] instanceof net.minecraft.text.Text
-                //$$                         ? ((net.minecraft.text.Text) args[0]).getString()
-                //$$                         : args[0].toString();
-                //$$                     AutoMarkerMod.onPlayerKilled(victimName);
-                //$$                 }
-                //$$             }
-                //$$         }
-                //$$     }
-                //$$ }
-                //#endif
-            }
-
             String text = message.getString();
             String keywordsSetting = AutoMarkerMod.config.chatKeywords;
             if (keywordsSetting != null && !keywordsSetting.isEmpty()) {
