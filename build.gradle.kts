@@ -25,7 +25,7 @@ val mcRange = when (project.name) {
     "1.20.1" -> "1.20-1.20.1"
     else -> project.name
 }
-val modVersion = "1.0.1"
+val modVersion = "1.0.2"
 
 version = "${mcRange}-${modVersion}"
 base.archivesName.set("AutoMarker")
