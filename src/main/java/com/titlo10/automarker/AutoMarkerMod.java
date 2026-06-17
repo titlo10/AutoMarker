@@ -5,7 +5,9 @@ import com.replaymod.recording.packet.PacketListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 //#if MC>=260100
@@ -22,6 +24,9 @@ public class AutoMarkerMod {
 
     private static long lastDeathTime = 0;
 
+    private static final long CHAT_DEBOUNCE_MS = 3000;
+    private static final Map<String, Long> lastChatMarkerTimes = new ConcurrentHashMap<>();
+
     public static void onPlayerDied() {
         long now = System.currentTimeMillis();
         if ((now - lastDeathTime) < 2000) {
@@ -29,6 +34,16 @@ public class AutoMarkerMod {
         }
         lastDeathTime = now;
         addMarker(getTranslation("marker.automarker.player_died"));
+    }
+
+    public static void onChatKeyword(String keyword) {
+        long now = System.currentTimeMillis();
+        Long last = lastChatMarkerTimes.get(keyword);
+        if (last != null && (now - last) < CHAT_DEBOUNCE_MS) {
+            return;
+        }
+        lastChatMarkerTimes.put(keyword, now);
+        addMarker(getTranslation("marker.automarker.chat", keyword));
     }
 
 
@@ -87,7 +102,6 @@ public class AutoMarkerMod {
             return format;
         } catch (Throwable t) {
             if (key.equals("marker.automarker.player_died")) return "Player Died";
-            if (key.equals("marker.automarker.player_killed")) return "Killed player: " + (args.length > 0 ? args[0] : "");
             if (key.equals("marker.automarker.dimension_change")) return "Dimension: " + (args.length > 0 ? args[0] : "");
             if (key.equals("marker.automarker.advancement")) return "Advancement: " + (args.length > 0 ? args[0] : "");
             if (key.equals("marker.automarker.chat")) return "Chat: " + (args.length > 0 ? args[0] : "");

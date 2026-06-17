@@ -21,14 +21,15 @@ AutoMarker hooks into ReplayMod and tags your timeline as things happen. Beats s
 ## Features
 
 - **Player Deaths** — Drops a "Player Died" marker when you die.
-- **Advancements** — Drops an "Advancement: [Name]" marker on completion.
-- **Chat Keywords** — Drops a "Chat: [Keyword]" marker when specific words hit chat. Good for stream alerts, raid calls, or anything else worth bookmarking.
+- **Advancements** — Drops an "Advancement: [Name]" marker on completion. Multiple advancements earned at once are merged into a single marker.
+- **Dimension Changes** — Drops a "Dimension: [Name]" marker when you cross between worlds (Nether, End, etc.).
+- **Chat Keywords** — Drops a "Chat: [Keyword]" marker when specific words hit chat. Good for stream alerts, raid calls, or anything else worth bookmarking. Matching is case-insensitive by default and debounced so a repeated keyword won't flood the timeline.
 
 ## Configuration
 
 ### In-Game GUI
 
-Install Mod Menu, open AutoMarker's config from the mods list — or press **K** in-game. Toggle death/advancement markers and set your chat keywords (comma-separated) from there.
+Install Mod Menu, open AutoMarker's config from the mods list — or press **K** in-game. Toggle death/advancement/dimension markers, choose whether keyword matching ignores case, and set your chat keywords (comma-separated) from there.
 
 ### Config File
 
@@ -38,7 +39,9 @@ Settings are saved to `.minecraft/config/replaymod_auto_markers.json`:
 {
   "enableDeaths": true,
   "enableAchievements": true,
-  "chatKeywords": "marker, highlight, raid"
+  "enableDimensionChanges": true,
+  "chatKeywords": "marker, highlight, raid",
+  "chatCaseInsensitive": true
 }
 ```
 

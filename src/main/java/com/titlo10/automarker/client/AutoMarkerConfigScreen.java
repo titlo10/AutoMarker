@@ -66,13 +66,19 @@ public class AutoMarkerConfigScreen extends Screen {
             })
         );
 
-        this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 95, 200, 20, Component.translatable("gui.automarker.keywords"));
+        this.addRenderableWidget(CycleButton.onOffBuilder(config.chatCaseInsensitive)
+            .create(x - 100, y + 75, 200, 20, Component.translatable("gui.automarker.chat_case_insensitive"), (button, value) -> {
+                config.chatCaseInsensitive = value;
+            })
+        );
+
+        this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 120, 200, 20, Component.translatable("gui.automarker.keywords"));
         this.chatKeywordsEdit.setValue(config.chatKeywords);
         this.addRenderableWidget(this.chatKeywordsEdit);
 
         this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.done"), button -> {
             onClose();
-        }).bounds(x - 100, y + 130, 200, 20).build());
+        }).bounds(x - 100, y + 155, 200, 20).build());
         //#else
         //$$ // Toggle Deaths button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDeaths)
@@ -95,15 +101,22 @@ public class AutoMarkerConfigScreen extends Screen {
         //$$     })
         //$$ );
         //$$
+        //$$ // Toggle Chat Case-Insensitive button
+        //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.chatCaseInsensitive)
+        //$$     .build(x - 100, y + 75, 200, 20, Text.translatable("gui.automarker.chat_case_insensitive"), (button, value) -> {
+        //$$         config.chatCaseInsensitive = value;
+        //$$     })
+        //$$ );
+        //$$
         //$$ // Text field input for chat keywords
-        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, x - 100, y + 95, 200, 20, Text.translatable("gui.automarker.keywords"));
+        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, x - 100, y + 120, 200, 20, Text.translatable("gui.automarker.keywords"));
         //$$ this.chatKeywordsEdit.setText(config.chatKeywords);
         //$$ this.addDrawableChild(this.chatKeywordsEdit);
         //$$
         //$$ // Done button
         //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.done"), button -> {
         //$$     close();
-        //$$ }).dimensions(x - 100, y + 130, 200, 20).build());
+        //$$ }).dimensions(x - 100, y + 155, 200, 20).build());
         //#endif
     }
 
@@ -115,7 +128,7 @@ public class AutoMarkerConfigScreen extends Screen {
         int y = this.height / 4;
         graphics.text(this.font, this.title, x - this.font.width(this.title) / 2, y - 20, 0xFFFFFFFF);
         Component label = Component.translatable("gui.automarker.chat_keywords_label");
-        graphics.text(this.font, label, x - 100, y + 80, 0xFFA0A0A0);
+        graphics.text(this.font, label, x - 100, y + 105, 0xFFA0A0A0);
     }
     //#else
     //$$ @Override
@@ -125,7 +138,7 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$     int y = this.height / 4;
     //$$     context.drawTextWithShadow(this.textRenderer, this.title, x - this.textRenderer.getWidth(this.title) / 2, y - 20, 0xFFFFFFFF);
     //$$     Text label = Text.translatable("gui.automarker.chat_keywords_label");
-    //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 80, 0xFFA0A0A0);
+    //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 105, 0xFFA0A0A0);
     //$$ }
     //#endif
 
