@@ -25,6 +25,7 @@ public class AutoMarkerMod {
     private static boolean isScheduled = false;
 
     private static long lastDeathTime = 0;
+    private static long lastTotemTime = 0;
 
     private static final long CHAT_DEBOUNCE_MS = 3000;
     private static final Map<String, Long> lastChatMarkerTimes = new ConcurrentHashMap<>();
@@ -274,6 +275,19 @@ public class AutoMarkerMod {
         addMarker(getTranslation("marker.automarker.player_died"));
     }
 
+    /**
+     * Called when the local player's Totem of Undying activates (entity event id 35). Debounced
+     * like deaths, since the event is a single discrete signal.
+     */
+    public static void onTotemPop() {
+        long now = System.currentTimeMillis();
+        if ((now - lastTotemTime) < 2000) {
+            return;
+        }
+        lastTotemTime = now;
+        addMarker(getTranslation("marker.automarker.totem_pop"));
+    }
+
     public static void onChatKeyword(String keyword) {
         long now = System.currentTimeMillis();
         Long last = lastChatMarkerTimes.get(keyword);
@@ -426,6 +440,7 @@ public class AutoMarkerMod {
         } catch (Throwable t) {
             if (key.equals("marker.automarker.player_died")) return "Player Died";
             if (key.equals("marker.automarker.player_killed")) return "Killed: " + (args.length > 0 ? args[0] : "");
+            if (key.equals("marker.automarker.totem_pop")) return "Totem Popped";
             if (key.equals("marker.automarker.dimension_change")) return "Dimension: " + (args.length > 0 ? args[0] : "");
             if (key.equals("marker.automarker.advancement")) return "Advancement: " + (args.length > 0 ? args[0] : "");
             if (key.equals("marker.automarker.chat")) return "Chat: " + (args.length > 0 ? args[0] : "");

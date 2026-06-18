@@ -5,6 +5,7 @@
   "gui.automarker.title": "ReplayMod Auto-Marker設定",
   "gui.automarker.track_deaths": "プレイヤーの死亡を記録する",
   "gui.automarker.track_pvp_kills": "プレイヤーのキルを記録する",
+  "gui.automarker.track_totem_pops": "トーテムの発動を記録する",
   "gui.automarker.track_achievements": "実績を記録する",
   "gui.automarker.track_dimension_changes": "ディメンション変更を記録する",
   "gui.automarker.chat_case_insensitive": "大文字小文字を区別しない",
@@ -13,6 +14,7 @@
   "gui.automarker.done": "完了",
   "marker.automarker.player_died": "プレイヤーが死亡しました",
   "marker.automarker.player_killed": "撃破: %s",
+  "marker.automarker.totem_pop": "トーテム発動",
   "marker.automarker.dimension_change": "ディメンション: %s",
   "marker.automarker.advancement": "進捗: %s",
   "marker.automarker.chat": "チャット: %s"

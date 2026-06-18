@@ -5,6 +5,7 @@
   "gui.automarker.title": "ReplayMod Auto-Marker Settings",
   "gui.automarker.track_deaths": "Track Player Deaths",
   "gui.automarker.track_pvp_kills": "Track Player Kills",
+  "gui.automarker.track_totem_pops": "Track Totem Pops",
   "gui.automarker.track_achievements": "Track Achievements",
   "gui.automarker.track_dimension_changes": "Track Dimension Changes",
   "gui.automarker.chat_case_insensitive": "Ignore Keyword Case",
@@ -13,6 +14,7 @@
   "gui.automarker.done": "Done",
   "marker.automarker.player_died": "Player Died",
   "marker.automarker.player_killed": "Killed: %s",
+  "marker.automarker.totem_pop": "Totem Popped",
   "marker.automarker.dimension_change": "Dimension: %s",
   "marker.automarker.advancement": "Advancement: %s",
   "marker.automarker.chat": "Chat: %s"
