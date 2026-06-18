@@ -27,7 +27,7 @@ subprojects {
 
     afterEvaluate {
         val subProjectBundleJar = project.tasks.findByName("bundleJar")
-        if (subProjectBundleJar != null && project.name != "1.21.11") {
+        if (subProjectBundleJar != null) {
             bundleJar.configure {
                 dependsOn(subProjectBundleJar)
                 from(subProjectBundleJar.outputs.files)

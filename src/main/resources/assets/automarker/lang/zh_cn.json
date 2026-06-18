@@ -4,6 +4,7 @@
   "key.automarker.config": "打开设置",
   "gui.automarker.title": "ReplayMod 自动标记设置",
   "gui.automarker.track_deaths": "记录玩家死亡",
+  "gui.automarker.track_pvp_kills": "记录击杀玩家",
   "gui.automarker.track_achievements": "记录获得成就",
   "gui.automarker.track_dimension_changes": "记录维度切换",
   "gui.automarker.chat_case_insensitive": "忽略关键词大小写",
@@ -11,6 +12,7 @@
   "gui.automarker.chat_keywords_label": "自定义聊天关键词（用逗号分隔）:",
   "gui.automarker.done": "完成",
   "marker.automarker.player_died": "玩家已死亡",
+  "marker.automarker.player_killed": "击杀: %s",
   "marker.automarker.dimension_change": "维度: %s",
   "marker.automarker.advancement": "进度: %s",
   "marker.automarker.chat": "聊天: %s"

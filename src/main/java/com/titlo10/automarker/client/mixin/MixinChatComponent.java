@@ -49,6 +49,12 @@ public class MixinChatComponent {
     //#endif
         if (message != null && AutoMarkerMod.config != null) {
             String text = message.getString();
+            if (AutoMarkerMod.config.enableDeaths) {
+                AutoMarkerMod.onPlayerDeathMessage(text);
+            }
+            if (AutoMarkerMod.config.enablePvpKills) {
+                AutoMarkerMod.onPvpDeathMessage(text);
+            }
             String keywordsSetting = AutoMarkerMod.config.chatKeywords;
             if (keywordsSetting != null && !keywordsSetting.isEmpty()) {
                 boolean ignoreCase = AutoMarkerMod.config.chatCaseInsensitive;

@@ -46,3 +46,6 @@ hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
+
+# Modrinth API token for publish-modrinth skill
+.modrinth_token

@@ -4,6 +4,7 @@
   "key.automarker.config": "Открыть настройки",
   "gui.automarker.title": "Настройки ReplayMod Auto-Marker",
   "gui.automarker.track_deaths": "Отслеживать смерти игрока",
+  "gui.automarker.track_pvp_kills": "Отслеживать убийства игроков",
   "gui.automarker.track_achievements": "Отслеживать достижения",
   "gui.automarker.track_dimension_changes": "Отслеживать смену измерений",
   "gui.automarker.chat_case_insensitive": "Игнорировать регистр",
@@ -11,6 +12,7 @@
   "gui.automarker.chat_keywords_label": "Свои ключевые слова для чата (через запятую):",
   "gui.automarker.done": "Готово",
   "marker.automarker.player_died": "Игрок умер",
+  "marker.automarker.player_killed": "Убит: %s",
   "marker.automarker.dimension_change": "Измерение: %s",
   "marker.automarker.advancement": "Достижение: %s",
   "marker.automarker.chat": "Чат: %s"

@@ -4,6 +4,7 @@
   "key.automarker.config": "Abrir ajustes",
   "gui.automarker.title": "Ajustes de ReplayMod Auto-Marker",
   "gui.automarker.track_deaths": "Registrar muertes del jugador",
+  "gui.automarker.track_pvp_kills": "Registrar bajas de jugadores",
   "gui.automarker.track_achievements": "Registrar logros",
   "gui.automarker.track_dimension_changes": "Registrar cambios de dimensión",
   "gui.automarker.chat_case_insensitive": "Ignorar mayúsculas/minúsculas",
@@ -11,6 +12,7 @@
   "gui.automarker.chat_keywords_label": "Palabras clave de chat personalizadas (separadas por comas):",
   "gui.automarker.done": "Hecho",
   "marker.automarker.player_died": "Jugador muerto",
+  "marker.automarker.player_killed": "Eliminado: %s",
   "marker.automarker.dimension_change": "Dimensión: %s",
   "marker.automarker.advancement": "Logro: %s",
   "marker.automarker.chat": "Chat: %s"

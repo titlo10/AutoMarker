@@ -17,6 +17,7 @@ public class AutoMarkerConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public boolean enableDeaths = true;
+    public boolean enablePvpKills = true;
     public boolean enableAchievements = true;
     public boolean enableDimensionChanges = true;
     public String chatKeywords = "";
