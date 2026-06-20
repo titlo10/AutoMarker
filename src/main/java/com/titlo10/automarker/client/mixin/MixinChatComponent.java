@@ -57,16 +57,14 @@ public class MixinChatComponent {
             }
             String keywordsSetting = AutoMarkerMod.config.chatKeywords;
             if (keywordsSetting != null && !keywordsSetting.isEmpty()) {
-                boolean ignoreCase = AutoMarkerMod.config.chatCaseInsensitive;
-                String haystack = ignoreCase ? text.toLowerCase() : text;
+                String haystack = text.toLowerCase();
                 String[] keywords = keywordsSetting.split(",");
                 for (String keyword : keywords) {
                     String trimmed = keyword.trim();
                     if (trimmed.isEmpty()) {
                         continue;
                     }
-                    String needle = ignoreCase ? trimmed.toLowerCase() : trimmed;
-                    if (haystack.contains(needle)) {
+                    if (haystack.contains(trimmed.toLowerCase())) {
                         AutoMarkerMod.onChatKeyword(trimmed);
                         break;
                     }

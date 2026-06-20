@@ -27,23 +27,4 @@ public class MixinLocalPlayer {
             AutoMarkerMod.onPlayerDied();
         }
     }
-
-    // Entity event id 35 = Totem of Undying activated. It reaches the local player's
-    // handleEntityEvent/handleStatus (delegated to super), so HEAD-injecting here catches the
-    // local player's totem pop without needing an identity check against the client player.
-    //#if MC>=260100
-    @Inject(method = "handleEntityEvent(B)V", at = @At("HEAD"))
-    protected void onHandleEntityEvent(byte id, CallbackInfo ci) {
-        if (id == 35 && AutoMarkerMod.config != null && AutoMarkerMod.config.enableTotemPops) {
-            AutoMarkerMod.onTotemPop();
-        }
-    }
-    //#else
-    //$$ @Inject(method = "handleStatus(B)V", at = @At("HEAD"))
-    //$$ protected void onHandleStatus(byte status, CallbackInfo ci) {
-    //$$     if (status == 35 && AutoMarkerMod.config != null && AutoMarkerMod.config.enableTotemPops) {
-    //$$         AutoMarkerMod.onTotemPop();
-    //$$     }
-    //$$ }
-    //#endif
 }

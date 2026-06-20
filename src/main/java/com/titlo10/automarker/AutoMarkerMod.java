@@ -30,16 +30,9 @@ public class AutoMarkerMod {
     private static final long CHAT_DEBOUNCE_MS = 3000;
     private static final Map<String, Long> lastChatMarkerTimes = new ConcurrentHashMap<>();
 
-    // PvP kill detection (chat-driven): parse server death messages where the local
-    // player is the killer. Server-independent and reliable, unlike client heuristics.
     private static final long KILL_DEBOUNCE_MS = 2000;
     private static final Map<String, Long> lastKillMarkerTimes = new ConcurrentHashMap<>();
 
-    /**
-     * Death-message pattern. The regex must expose two named groups: {@code victim} and
-     * {@code killer}. Matching is done with {@link Matcher#find()}, so server prefixes
-     * (e.g. "[Lobby] ") don't break detection.
-     */
     private static final class KillPattern {
         final Pattern pattern;
         KillPattern(Pattern pattern) {
@@ -47,13 +40,8 @@ public class AutoMarkerMod {
         }
     }
 
-    // Username token: stops at punctuation/spaces so trailing ". (+2 assist)" etc. is excluded.
     private static final String NAME = "(?<%s>\\S+)";
 
-    // Vanilla death-message translation keys whose format is "<victim> ... <killer> [...]"
-    // (i.e. %1$s = victim, %2$s = killer). These are resolved through the client's active
-    // Language, so detection automatically follows the client locale and works in every
-    // language Minecraft ships — including all of our supported translations.
     private static final String[] VANILLA_DEATH_KEYS = new String[]{
         "death.attack.player",
         "death.attack.mob",
@@ -68,29 +56,15 @@ public class AutoMarkerMod {
         "death.attack.thorns",
     };
 
-    // Extra non-vanilla phrasings used by popular minigame servers (Hypixel, CubeCraft, ...).
-    // These are sent as plain text and are effectively always English regardless of client
-    // locale, so they're kept alongside the locale-derived vanilla patterns.
     private static final KillPattern[] CUSTOM_KILL_PATTERNS = new KillPattern[]{
-        // "<victim> was slain by <killer>"
         new KillPattern(Pattern.compile(named("victim") + "\\s+was slain by\\s+" + named("killer"))),
-        // "<victim> was killed by <killer>"
         new KillPattern(Pattern.compile(named("victim") + "\\s+was killed by\\s+" + named("killer"))),
-        // "<victim> was shot by <killer>"
         new KillPattern(Pattern.compile(named("victim") + "\\s+was shot by\\s+" + named("killer"))),
-        // "<killer> has killed <victim>"
         new KillPattern(Pattern.compile(named("killer") + "\\s+has killed\\s+" + named("victim"))),
     };
 
-    // Matches Java format placeholders: indexed "%1$s" (group 1 = index) or plain "%s".
     private static final Pattern FORMAT_PLACEHOLDER = Pattern.compile("%(?:(\\d+)\\$)?s");
 
-    // Vanilla death-message translation keys (the victim is always %1$s). Used to detect the
-    // LOCAL player's own death from chat — essential on servers where the death screen never
-    // shows. Resolved through the client Language, so this follows the client locale and works
-    // in every supported language. ".item" variants are omitted because the base key's text is a
-    // prefix of theirs and matches via find(); ".player" variants are kept (different wording).
-    // Unknown keys on a given version resolve to themselves and are skipped during compilation.
     private static final String[] VANILLA_DEATH_VICTIM_KEYS = new String[]{
         "death.attack.anvil", "death.attack.anvil.player",
         "death.attack.arrow",
@@ -141,16 +115,12 @@ public class AutoMarkerMod {
         "death.fell.assist", "death.fell.finish", "death.fell.killer",
     };
 
-    // Non-vanilla victim phrasings used by minigame servers (always English). Mirror of the kill
-    // custom patterns, but anchored on the victim so the LOCAL player's death is caught even when
-    // the client locale differs from the server's English text.
     private static final KillPattern[] CUSTOM_DEATH_PATTERNS = new KillPattern[]{
         new KillPattern(Pattern.compile(named("victim") + "\\s+was slain by\\s+\\S+")),
         new KillPattern(Pattern.compile(named("victim") + "\\s+was killed by\\s+\\S+")),
         new KillPattern(Pattern.compile(named("victim") + "\\s+was shot by\\s+\\S+")),
     };
 
-    // Cached compiled patterns and a sentinel used to rebuild them when the client language changes.
     private static volatile KillPattern[] cachedKillPatterns = null;
     private static volatile KillPattern[] cachedDeathPatterns = null;
     private static volatile String cachedLangSentinel = null;
@@ -159,24 +129,16 @@ public class AutoMarkerMod {
         return String.format(NAME, group);
     }
 
-    /** Patterns that detect the LOCAL player killing another player (killer == local). */
     private static KillPattern[] getKillPatterns() {
         ensurePatterns();
         return cachedKillPatterns;
     }
 
-    /** Patterns that detect the LOCAL player's own death (victim == local). */
     private static KillPattern[] getDeathPatterns() {
         ensurePatterns();
         return cachedDeathPatterns;
     }
 
-    /**
-     * (Re)builds both the kill and death pattern caches from the current client language whenever
-     * the locale has changed since the last build. The locale is detected cheaply by resolving a
-     * single death key and comparing it against the previous result, so the common case is one map
-     * lookup with no recompilation.
-     */
     private static void ensurePatterns() {
         String sentinel = resolveDeathFormat("death.attack.player");
         if (cachedKillPatterns != null && cachedDeathPatterns != null
@@ -224,12 +186,6 @@ public class AutoMarkerMod {
         }
     }
 
-    /**
-     * Converts a Minecraft death-message format (e.g. "%1$s was slain by %2$s using %3$s") into a
-     * regex with named {@code victim}/{@code killer} groups. The mapping is by placeholder index
-     * (%1$s = victim, %2$s = killer), so it stays correct even when a translation reorders the
-     * arguments. Returns {@code null} if the format lacks both names (e.g. an unresolved key).
-     */
     private static Pattern buildPatternFromFormat(String format, boolean requireKiller) {
         if (format == null || format.isEmpty()) {
             return null;
@@ -250,7 +206,6 @@ public class AutoMarkerMod {
                 sb.append(named("killer"));
                 hasKiller = true;
             } else {
-                // Any further argument (item used, etc.) — match loosely without capturing.
                 sb.append(".*?");
             }
             last = m.end();
@@ -275,10 +230,6 @@ public class AutoMarkerMod {
         addMarker(getTranslation("marker.automarker.player_died"));
     }
 
-    /**
-     * Called when the local player's Totem of Undying activates (entity event id 35). Debounced
-     * like deaths, since the event is a single discrete signal.
-     */
     public static void onTotemPop() {
         long now = System.currentTimeMillis();
         if ((now - lastTotemTime) < 2000) {
@@ -298,10 +249,6 @@ public class AutoMarkerMod {
         addMarker(getTranslation("marker.automarker.chat", keyword));
     }
 
-    /**
-     * Called for every chat message when PvP tracking is enabled. Parses known death-message
-     * formats; if the killer is the local player, adds a kill marker for the victim.
-     */
     public static void onPvpDeathMessage(String text) {
         if (text == null || text.isEmpty()) {
             return;
@@ -320,7 +267,6 @@ public class AutoMarkerMod {
             if (killer.isEmpty() || victim.isEmpty()) {
                 continue;
             }
-            // Only our own kills, and never when we are the victim (e.g. "we died" messages).
             if (!killer.equalsIgnoreCase(localName) || victim.equalsIgnoreCase(localName)) {
                 continue;
             }
@@ -335,11 +281,6 @@ public class AutoMarkerMod {
         }
     }
 
-    /**
-     * Called for every chat message when death tracking is enabled. If a death message's victim is
-     * the local player, records a death. This is the only reliable death signal on servers, where
-     * the client-side death screen ({@link #onPlayerDied()} via mixin) usually never appears.
-     */
     public static void onPlayerDeathMessage(String text) {
         if (text == null || text.isEmpty()) {
             return;
@@ -361,7 +302,6 @@ public class AutoMarkerMod {
         }
     }
 
-    /** Trims leading/trailing punctuation (e.g. the trailing "." in "Steve.") from a captured name. */
     private static String sanitizeName(String name) {
         if (name == null) {
             return "";

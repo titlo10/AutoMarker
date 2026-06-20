@@ -22,7 +22,6 @@ public class AutoMarkerConfig {
     public boolean enableAchievements = true;
     public boolean enableDimensionChanges = true;
     public String chatKeywords = "";
-    public boolean chatCaseInsensitive = true;
 
     public static AutoMarkerConfig load() {
         if (CONFIG_FILE.exists()) {

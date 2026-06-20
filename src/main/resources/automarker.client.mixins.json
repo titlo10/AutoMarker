@@ -14,7 +14,8 @@
 		"MixinToastManager",
 		"AdvancementToastAccessor",
 		"MixinChatComponent",
-		"MixinLocalPlayer"
+		"MixinLocalPlayer",
+		"MixinClientPacketListener"
 	],
 	"injectors": {
 		"defaultRequire": 1

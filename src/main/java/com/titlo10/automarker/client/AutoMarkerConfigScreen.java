@@ -42,107 +42,96 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$ }
     //#endif
 
+    private static final int COL_W = 150;
+    private static final int GAP = 10;
+    private static final int ROW_H = 24;
+
     @Override
     protected void init() {
         int x = this.width / 2;
         int y = this.height / 4;
+        int leftX = x - COL_W - GAP / 2;
+        int rightX = x + GAP / 2;
+        int fullW = COL_W * 2 + GAP;
+        int keywordsY = y + ROW_H * 3 + 18;
+        int doneY = keywordsY + 28;
 
         //#if MC>=260100
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableDeaths)
-            .create(x - 100, y, 200, 20, Component.translatable("gui.automarker.track_deaths"), (button, value) -> {
+            .create(leftX, y, COL_W, 20, Component.translatable("gui.automarker.track_deaths"), (button, value) -> {
                 config.enableDeaths = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enablePvpKills)
-            .create(x - 100, y + 25, 200, 20, Component.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
+            .create(rightX, y, COL_W, 20, Component.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
                 config.enablePvpKills = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableTotemPops)
-            .create(x - 100, y + 50, 200, 20, Component.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
+            .create(leftX, y + ROW_H, COL_W, 20, Component.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
                 config.enableTotemPops = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableAchievements)
-            .create(x - 100, y + 75, 200, 20, Component.translatable("gui.automarker.track_achievements"), (button, value) -> {
+            .create(rightX, y + ROW_H, COL_W, 20, Component.translatable("gui.automarker.track_achievements"), (button, value) -> {
                 config.enableAchievements = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableDimensionChanges)
-            .create(x - 100, y + 100, 200, 20, Component.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
+            .create(leftX, y + ROW_H * 2, COL_W, 20, Component.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
                 config.enableDimensionChanges = value;
             })
         );
 
-        this.addRenderableWidget(CycleButton.onOffBuilder(config.chatCaseInsensitive)
-            .create(x - 100, y + 125, 200, 20, Component.translatable("gui.automarker.chat_case_insensitive"), (button, value) -> {
-                config.chatCaseInsensitive = value;
-            })
-        );
-
-        this.chatKeywordsEdit = new EditBox(this.font, x - 100, y + 170, 200, 20, Component.translatable("gui.automarker.keywords"));
+        this.chatKeywordsEdit = new EditBox(this.font, leftX, keywordsY, fullW, 20, Component.translatable("gui.automarker.keywords"));
         this.chatKeywordsEdit.setValue(config.chatKeywords);
         this.addRenderableWidget(this.chatKeywordsEdit);
 
         this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.done"), button -> {
             onClose();
-        }).bounds(x - 100, y + 205, 200, 20).build());
+        }).bounds(leftX, doneY, fullW, 20).build());
         //#else
-        //$$ // Toggle Deaths button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDeaths)
-        //$$     .build(x - 100, y, 200, 20, Text.translatable("gui.automarker.track_deaths"), (button, value) -> {
+        //$$     .build(leftX, y, COL_W, 20, Text.translatable("gui.automarker.track_deaths"), (button, value) -> {
         //$$         config.enableDeaths = value;
         //$$     })
         //$$ );
         //$$
-        //$$ // Toggle PvP Kills button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enablePvpKills)
-        //$$     .build(x - 100, y + 25, 200, 20, Text.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
+        //$$     .build(rightX, y, COL_W, 20, Text.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
         //$$         config.enablePvpKills = value;
         //$$     })
         //$$ );
         //$$
-        //$$ // Toggle Totem Pops button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableTotemPops)
-        //$$     .build(x - 100, y + 50, 200, 20, Text.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
+        //$$     .build(leftX, y + ROW_H, COL_W, 20, Text.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
         //$$         config.enableTotemPops = value;
         //$$     })
         //$$ );
         //$$
-        //$$ // Toggle Achievements button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableAchievements)
-        //$$     .build(x - 100, y + 75, 200, 20, Text.translatable("gui.automarker.track_achievements"), (button, value) -> {
+        //$$     .build(rightX, y + ROW_H, COL_W, 20, Text.translatable("gui.automarker.track_achievements"), (button, value) -> {
         //$$         config.enableAchievements = value;
         //$$     })
         //$$ );
         //$$
-        //$$ // Toggle Dimension Changes button
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDimensionChanges)
-        //$$     .build(x - 100, y + 100, 200, 20, Text.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
+        //$$     .build(leftX, y + ROW_H * 2, COL_W, 20, Text.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
         //$$         config.enableDimensionChanges = value;
         //$$     })
         //$$ );
         //$$
-        //$$ // Toggle Chat Case-Insensitive button
-        //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.chatCaseInsensitive)
-        //$$     .build(x - 100, y + 125, 200, 20, Text.translatable("gui.automarker.chat_case_insensitive"), (button, value) -> {
-        //$$         config.chatCaseInsensitive = value;
-        //$$     })
-        //$$ );
-        //$$
-        //$$ // Text field input for chat keywords
-        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, x - 100, y + 170, 200, 20, Text.translatable("gui.automarker.keywords"));
+        //$$ this.chatKeywordsEdit = new TextFieldWidget(this.textRenderer, leftX, keywordsY, fullW, 20, Text.translatable("gui.automarker.keywords"));
         //$$ this.chatKeywordsEdit.setText(config.chatKeywords);
         //$$ this.addDrawableChild(this.chatKeywordsEdit);
         //$$
-        //$$ // Done button
         //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.done"), button -> {
         //$$     close();
-        //$$ }).dimensions(x - 100, y + 205, 200, 20).build());
+        //$$ }).dimensions(leftX, doneY, fullW, 20).build());
         //#endif
     }
 
@@ -152,20 +141,48 @@ public class AutoMarkerConfigScreen extends Screen {
         super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
         int x = this.width / 2;
         int y = this.height / 4;
+        int leftX = x - COL_W - GAP / 2;
         graphics.text(this.font, this.title, x - this.font.width(this.title) / 2, y - 20, 0xFFFFFFFF);
         Component label = Component.translatable("gui.automarker.chat_keywords_label");
-        graphics.text(this.font, label, x - 100, y + 155, 0xFFA0A0A0);
+        graphics.text(this.font, label, leftX, y + ROW_H * 3 + 6, 0xFFA0A0A0);
     }
     //#else
     //$$ @Override
     //$$ public void render(net.minecraft.client.gui.DrawContext context, int mouseX, int mouseY, float delta) {
+    //#if MC<12002
+    //$$     this.renderBackground(context);
+    //#endif
     //$$     super.render(context, mouseX, mouseY, delta);
     //$$     int x = this.width / 2;
     //$$     int y = this.height / 4;
+    //$$     int leftX = x - COL_W - GAP / 2;
     //$$     context.drawTextWithShadow(this.textRenderer, this.title, x - this.textRenderer.getWidth(this.title) / 2, y - 20, 0xFFFFFFFF);
     //$$     Text label = Text.translatable("gui.automarker.chat_keywords_label");
-    //$$     context.drawTextWithShadow(this.textRenderer, label, x - 100, y + 155, 0xFFA0A0A0);
+    //$$     context.drawTextWithShadow(this.textRenderer, label, leftX, y + ROW_H * 3 + 6, 0xFFA0A0A0);
     //$$ }
+    //#endif
+
+    //#if MC>=260100
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
+    }
+    //#else
+    //$$ @Override
+    //$$ public boolean shouldPause() {
+    //$$     return false;
+    //$$ }
+    //#if MC>=12002
+    //$$ @Override
+    //$$ public void renderBackground(net.minecraft.client.gui.DrawContext context, int mouseX, int mouseY, float delta) {
+    //$$     context.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
+    //$$ }
+    //#endif
     //#endif
 
     //#if MC>=260100

@@ -35,6 +35,9 @@ versions/*/.gradle/
 # replaymod sources (external dependency, not part of this repo)
 replaymod-source/
 
+# decompiled Minecraft sources (genSources output, external, not part of this repo)
+minecraft-clientOnly-*-sources/
+
 # temporary debug / log files created during development
 *.log
 build_output*.txt
@@ -49,3 +52,6 @@ replay_*.log
 
 # Modrinth API token for publish-modrinth skill
 .modrinth_token
+
+# Claude Code workspace (skills/settings, kept local only)
+.claude/
