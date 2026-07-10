@@ -25,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ToastManager.class)
 public class MixinToastManager {
+    private static boolean automarker$warnedAdvancementFailure;
     @Inject(method = "addToast", at = @At("HEAD"))
     private void onAddToast(Toast toast, CallbackInfo ci) {
         if (toast instanceof AdvancementToast && AutoMarkerMod.config != null && AutoMarkerMod.config.enableAchievements) {
@@ -67,6 +68,10 @@ public class MixinToastManager {
                 //#endif
                 //#endif
             } catch (Throwable t) {
+                if (!automarker$warnedAdvancementFailure) {
+                    automarker$warnedAdvancementFailure = true;
+                    com.titlo10.automarker.AutoMarker.LOGGER.warn("Failed to read an advancement toast", t);
+                }
             }
         }
     }

@@ -1,14 +1,9 @@
 package com.titlo10.automarker;
 
-import com.replaymod.recording.ReplayModRecording;
-import com.replaymod.recording.packet.PacketListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,7 +17,7 @@ public class AutoMarkerMod {
     public static AutoMarkerConfig config;
 
     private static final List<String> pendingAdvancements = new ArrayList<>();
-    private static boolean isScheduled = false;
+    private static int advancementFlushTicks = -1;
 
     private static long lastDeathTime = 0;
     private static long lastTotemTime = 0;
@@ -246,6 +241,7 @@ public class AutoMarkerMod {
             return;
         }
         lastChatMarkerTimes.put(keyword, now);
+        trimDebounceMap(lastChatMarkerTimes);
         addMarker(getTranslation("marker.automarker.chat", keyword));
     }
 
@@ -276,6 +272,7 @@ public class AutoMarkerMod {
                 return;
             }
             lastKillMarkerTimes.put(victim, now);
+            trimDebounceMap(lastKillMarkerTimes);
             addMarker(getTranslation("marker.automarker.player_killed", victim));
             return;
         }
@@ -329,45 +326,114 @@ public class AutoMarkerMod {
         config = AutoMarkerConfig.load();
     }
 
-    public static void addMarker(String name) {
-        try {
-            if (ReplayModRecording.instance != null && ReplayModRecording.instance.getConnectionEventHandler() != null) {
-                PacketListener packetListener = ReplayModRecording.instance.getConnectionEventHandler().getPacketListener();
-                if (packetListener != null) {
-                    packetListener.addMarker(name);
-                    AutoMarker.LOGGER.info("Added automatic marker: {}", name);
-                }
-            }
-        } catch (Throwable t) {
-            AutoMarker.LOGGER.error("Failed to add auto-marker: " + name, t);
+    public static boolean addMarker(String name) {
+        if (ReplayModAdapter.addMarker(name)) {
+            AutoMarker.LOGGER.info("Added automatic marker: {}", name);
+            return true;
         }
+        return false;
+    }
+
+    public static boolean isRecordingActive() {
+        return ReplayModAdapter.isRecordingActive();
     }
 
     public static void addAdvancementMarker(String title) {
         synchronized (pendingAdvancements) {
             pendingAdvancements.add(title);
-            if (!isScheduled) {
-                isScheduled = true;
-                CompletableFuture.runAsync(() -> {
-                    //#if MC>=260100
-                    Minecraft.getInstance().execute(() -> {
-                    //#else
-                    //$$ MinecraftClient.getInstance().execute(() -> {
-                    //#endif
-                        List<String> titles;
-                        synchronized (pendingAdvancements) {
-                            titles = new ArrayList<>(pendingAdvancements);
-                            pendingAdvancements.clear();
-                            isScheduled = false;
-                        }
-                        if (!titles.isEmpty()) {
-                            String combined = getTranslation("marker.automarker.advancement", String.join(", ", titles));
-                            addMarker(combined);
-                        }
-                    });
-                }, CompletableFuture.delayedExecutor(100, TimeUnit.MILLISECONDS));
+            advancementFlushTicks = 3;
+        }
+    }
+
+    public static void clientTick() {
+        List<String> titles = null;
+        synchronized (pendingAdvancements) {
+            if (advancementFlushTicks > 0) {
+                advancementFlushTicks--;
+            }
+            if (advancementFlushTicks == 0) {
+                titles = new ArrayList<>(pendingAdvancements);
+                pendingAdvancements.clear();
+                advancementFlushTicks = -1;
             }
         }
+        if (titles != null && !titles.isEmpty()) {
+            addMarker(getTranslation("marker.automarker.advancement", String.join(", ", titles)));
+        }
+    }
+
+    public static void resetSession() {
+        synchronized (pendingAdvancements) {
+            pendingAdvancements.clear();
+            advancementFlushTicks = -1;
+        }
+        lastDeathTime = 0;
+        lastTotemTime = 0;
+        lastChatMarkerTimes.clear();
+        lastKillMarkerTimes.clear();
+        cachedKillPatterns = null;
+        cachedDeathPatterns = null;
+        cachedLangSentinel = null;
+        ReplayModAdapter.resetSession();
+    }
+
+    public static boolean onTranslatedDeathMessage(String key, Object[] arguments) {
+        if (key == null || !key.startsWith("death.") || arguments == null || arguments.length == 0) {
+            return false;
+        }
+        String localName = getLocalPlayerName();
+        String victim = componentString(arguments[0]);
+        if (localName == null || !sanitizeName(victim).equalsIgnoreCase(localName)) {
+            if (config != null && config.enablePvpKills && arguments.length > 1) {
+                String killer = sanitizeName(componentString(arguments[1]));
+                if (killer.equalsIgnoreCase(localName) && isPlayerKillKey(key)) {
+                    String cleanVictim = sanitizeName(victim);
+                    if (!cleanVictim.isEmpty()) {
+                        markKill(cleanVictim);
+                    }
+                }
+            }
+            return true;
+        }
+        if (config != null && config.enableDeaths) {
+            onPlayerDied();
+        }
+        return true;
+    }
+
+    private static boolean isPlayerKillKey(String key) {
+        for (String candidate : VANILLA_DEATH_KEYS) {
+            if (candidate.equals(key) || key.startsWith(candidate + ".")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void markKill(String victim) {
+        long now = System.currentTimeMillis();
+        Long last = lastKillMarkerTimes.get(victim);
+        if (last == null || now - last >= KILL_DEBOUNCE_MS) {
+            lastKillMarkerTimes.put(victim, now);
+            trimDebounceMap(lastKillMarkerTimes);
+            addMarker(getTranslation("marker.automarker.player_killed", victim));
+        }
+    }
+
+    private static String componentString(Object value) {
+        if (value == null) return "";
+        try {
+            return (String) value.getClass().getMethod("getString").invoke(value);
+        } catch (ReflectiveOperationException ignored) {
+            return String.valueOf(value);
+        }
+    }
+
+    private static void trimDebounceMap(Map<String, Long> map) {
+        if (map.size() <= 256) return;
+        long cutoff = System.currentTimeMillis() - Math.max(CHAT_DEBOUNCE_MS, KILL_DEBOUNCE_MS);
+        map.entrySet().removeIf(entry -> entry.getValue() < cutoff);
+        if (map.size() > 256) map.clear();
     }
 
     public static String getTranslation(String key, Object... args) {
@@ -387,5 +453,18 @@ public class AutoMarkerMod {
             return key;
         }
     }
-}
 
+    public static String getDimensionName(String id) {
+        if (id == null || id.isEmpty()) return "";
+        int separator = id.indexOf(':');
+        String namespace = separator >= 0 ? id.substring(0, separator) : "minecraft";
+        String path = separator >= 0 ? id.substring(separator + 1) : id;
+        String key = "dimension." + namespace + "." + path;
+        String translated = getTranslation(key);
+        if (!key.equals(translated)) {
+            return translated;
+        }
+        String readable = path.replace('_', ' ');
+        return readable.isEmpty() ? id : Character.toUpperCase(readable.charAt(0)) + readable.substring(1);
+    }
+}

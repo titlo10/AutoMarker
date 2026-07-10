@@ -110,7 +110,6 @@ preprocess {
 
 tasks.jar {
     archiveClassifier.set("raw")
-    exclude("com/replaymod/**")
 }
 
 val bundleJar by tasks.registering(Copy::class) {

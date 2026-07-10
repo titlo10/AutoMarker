@@ -7,11 +7,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MessageSignature;
 import net.minecraft.client.multiplayer.chat.GuiMessageTag;
 import net.minecraft.client.multiplayer.chat.GuiMessageSource;
+import net.minecraft.network.chat.contents.TranslatableContents;
 //#else
 //$$ import net.minecraft.client.gui.hud.ChatHud;
 //$$ import net.minecraft.text.Text;
 //$$ import net.minecraft.network.message.MessageSignatureData;
 //$$ import net.minecraft.client.gui.hud.MessageIndicator;
+//$$ import net.minecraft.text.TranslatableTextContent;
 //#endif
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -48,6 +50,10 @@ public class MixinChatComponent {
     //$$ private void handleChatMessage(Text message) {
     //#endif
         if (message != null && AutoMarkerMod.config != null) {
+            if (handleTranslatedMessage(message)) {
+                handleKeywords(message.getString());
+                return;
+            }
             String text = message.getString();
             if (AutoMarkerMod.config.enableDeaths) {
                 AutoMarkerMod.onPlayerDeathMessage(text);
@@ -55,21 +61,42 @@ public class MixinChatComponent {
             if (AutoMarkerMod.config.enablePvpKills) {
                 AutoMarkerMod.onPvpDeathMessage(text);
             }
+            handleKeywords(text);
+        }
+    }
+
+    //#if MC>=260100
+    private boolean handleTranslatedMessage(Component message) {
+        if (message.getContents() instanceof TranslatableContents translated) {
+            return AutoMarkerMod.onTranslatedDeathMessage(translated.getKey(), translated.getArgs());
+        }
+        return false;
+    }
+    //#else
+    //$$ private boolean handleTranslatedMessage(Text message) {
+    //$$     if (message.getContent() instanceof TranslatableTextContent translated) {
+    //$$         return AutoMarkerMod.onTranslatedDeathMessage(translated.getKey(), translated.getArgs());
+    //$$     }
+    //$$     return false;
+    //$$ }
+    //#endif
+
+    private void handleKeywords(String text) {
             String keywordsSetting = AutoMarkerMod.config.chatKeywords;
             if (keywordsSetting != null && !keywordsSetting.isEmpty()) {
-                String haystack = text.toLowerCase();
+                String haystack = text.toLowerCase(java.util.Locale.ROOT);
                 String[] keywords = keywordsSetting.split(",");
                 for (String keyword : keywords) {
                     String trimmed = keyword.trim();
                     if (trimmed.isEmpty()) {
                         continue;
                     }
-                    if (haystack.contains(trimmed.toLowerCase())) {
-                        AutoMarkerMod.onChatKeyword(trimmed);
+                    String normalized = trimmed.toLowerCase(java.util.Locale.ROOT);
+                    if (haystack.contains(normalized)) {
+                        AutoMarkerMod.onChatKeyword(normalized);
                         break;
                     }
                 }
             }
-        }
     }
 }

@@ -26,9 +26,13 @@ public class AutoMarkerConfigScreen extends Screen {
     private final AutoMarkerConfig config;
 
     public AutoMarkerConfigScreen(Screen parent) {
+        this(parent, AutoMarkerMod.config.copy());
+    }
+
+    private AutoMarkerConfigScreen(Screen parent, AutoMarkerConfig workingConfig) {
         super(Component.translatable("gui.automarker.title"));
         this.parent = parent;
-        this.config = AutoMarkerMod.config;
+        this.config = workingConfig;
     }
     //#else
     //$$ private final Screen parent;
@@ -36,9 +40,13 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$ private final AutoMarkerConfig config;
     //$$
     //$$ public AutoMarkerConfigScreen(Screen parent) {
+    //$$     this(parent, AutoMarkerMod.config.copy());
+    //$$ }
+    //$$
+    //$$ private AutoMarkerConfigScreen(Screen parent, AutoMarkerConfig workingConfig) {
     //$$     super(Text.translatable("gui.automarker.title"));
     //$$     this.parent = parent;
-    //$$     this.config = AutoMarkerMod.config;
+    //$$     this.config = workingConfig;
     //$$ }
     //#endif
 
@@ -50,39 +58,41 @@ public class AutoMarkerConfigScreen extends Screen {
     protected void init() {
         int x = this.width / 2;
         int y = this.height / 4;
-        int leftX = x - COL_W - GAP / 2;
+        int colW = Math.min(COL_W, Math.max(90, (this.width - 30 - GAP) / 2));
+        int leftX = x - colW - GAP / 2;
         int rightX = x + GAP / 2;
-        int fullW = COL_W * 2 + GAP;
+        int fullW = colW * 2 + GAP;
         int keywordsY = y + ROW_H * 3 + 18;
         int doneY = keywordsY + 28;
+        int buttonW = (fullW - GAP * 2) / 3;
 
         //#if MC>=260100
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableDeaths)
-            .create(leftX, y, COL_W, 20, Component.translatable("gui.automarker.track_deaths"), (button, value) -> {
+            .create(leftX, y, colW, 20, Component.translatable("gui.automarker.track_deaths"), (button, value) -> {
                 config.enableDeaths = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enablePvpKills)
-            .create(rightX, y, COL_W, 20, Component.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
+            .create(rightX, y, colW, 20, Component.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
                 config.enablePvpKills = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableTotemPops)
-            .create(leftX, y + ROW_H, COL_W, 20, Component.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
+            .create(leftX, y + ROW_H, colW, 20, Component.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
                 config.enableTotemPops = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableAchievements)
-            .create(rightX, y + ROW_H, COL_W, 20, Component.translatable("gui.automarker.track_achievements"), (button, value) -> {
+            .create(rightX, y + ROW_H, colW, 20, Component.translatable("gui.automarker.track_achievements"), (button, value) -> {
                 config.enableAchievements = value;
             })
         );
 
         this.addRenderableWidget(CycleButton.onOffBuilder(config.enableDimensionChanges)
-            .create(leftX, y + ROW_H * 2, COL_W, 20, Component.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
+            .create(leftX, y + ROW_H * 2, colW, 20, Component.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
                 config.enableDimensionChanges = value;
             })
         );
@@ -91,36 +101,40 @@ public class AutoMarkerConfigScreen extends Screen {
         this.chatKeywordsEdit.setValue(config.chatKeywords);
         this.addRenderableWidget(this.chatKeywordsEdit);
 
-        this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.done"), button -> {
-            onClose();
-        }).bounds(leftX, doneY, fullW, 20).build());
+        this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.reset"), button -> {
+            this.minecraft.setScreen(new AutoMarkerConfigScreen(parent, new AutoMarkerConfig()));
+        }).bounds(leftX, doneY, buttonW, 20).build());
+        this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.cancel"), button -> onClose())
+            .bounds(leftX + buttonW + GAP, doneY, buttonW, 20).build());
+        this.addRenderableWidget(Button.builder(Component.translatable("gui.automarker.done"), button -> saveAndClose())
+            .bounds(leftX + (buttonW + GAP) * 2, doneY, buttonW, 20).build());
         //#else
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDeaths)
-        //$$     .build(leftX, y, COL_W, 20, Text.translatable("gui.automarker.track_deaths"), (button, value) -> {
+        //$$     .build(leftX, y, colW, 20, Text.translatable("gui.automarker.track_deaths"), (button, value) -> {
         //$$         config.enableDeaths = value;
         //$$     })
         //$$ );
         //$$
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enablePvpKills)
-        //$$     .build(rightX, y, COL_W, 20, Text.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
+        //$$     .build(rightX, y, colW, 20, Text.translatable("gui.automarker.track_pvp_kills"), (button, value) -> {
         //$$         config.enablePvpKills = value;
         //$$     })
         //$$ );
         //$$
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableTotemPops)
-        //$$     .build(leftX, y + ROW_H, COL_W, 20, Text.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
+        //$$     .build(leftX, y + ROW_H, colW, 20, Text.translatable("gui.automarker.track_totem_pops"), (button, value) -> {
         //$$         config.enableTotemPops = value;
         //$$     })
         //$$ );
         //$$
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableAchievements)
-        //$$     .build(rightX, y + ROW_H, COL_W, 20, Text.translatable("gui.automarker.track_achievements"), (button, value) -> {
+        //$$     .build(rightX, y + ROW_H, colW, 20, Text.translatable("gui.automarker.track_achievements"), (button, value) -> {
         //$$         config.enableAchievements = value;
         //$$     })
         //$$ );
         //$$
         //$$ this.addDrawableChild(CyclingButtonWidget.onOffBuilder(config.enableDimensionChanges)
-        //$$     .build(leftX, y + ROW_H * 2, COL_W, 20, Text.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
+        //$$     .build(leftX, y + ROW_H * 2, colW, 20, Text.translatable("gui.automarker.track_dimension_changes"), (button, value) -> {
         //$$         config.enableDimensionChanges = value;
         //$$     })
         //$$ );
@@ -129,9 +143,13 @@ public class AutoMarkerConfigScreen extends Screen {
         //$$ this.chatKeywordsEdit.setText(config.chatKeywords);
         //$$ this.addDrawableChild(this.chatKeywordsEdit);
         //$$
-        //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.done"), button -> {
-        //$$     close();
-        //$$ }).dimensions(leftX, doneY, fullW, 20).build());
+        //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.reset"), button -> {
+        //$$     this.client.setScreen(new AutoMarkerConfigScreen(parent, new AutoMarkerConfig()));
+        //$$ }).dimensions(leftX, doneY, buttonW, 20).build());
+        //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.cancel"), button -> close())
+        //$$     .dimensions(leftX + buttonW + GAP, doneY, buttonW, 20).build());
+        //$$ this.addDrawableChild(ButtonWidget.builder(Text.translatable("gui.automarker.done"), button -> saveAndClose())
+        //$$     .dimensions(leftX + (buttonW + GAP) * 2, doneY, buttonW, 20).build());
         //#endif
     }
 
@@ -141,10 +159,15 @@ public class AutoMarkerConfigScreen extends Screen {
         super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
         int x = this.width / 2;
         int y = this.height / 4;
-        int leftX = x - COL_W - GAP / 2;
+        int colW = Math.min(COL_W, Math.max(90, (this.width - 30 - GAP) / 2));
+        int leftX = x - colW - GAP / 2;
         graphics.text(this.font, this.title, x - this.font.width(this.title) / 2, y - 20, 0xFFFFFFFF);
         Component label = Component.translatable("gui.automarker.chat_keywords_label");
         graphics.text(this.font, label, leftX, y + ROW_H * 3 + 6, 0xFFA0A0A0);
+        Component status = Component.translatable(AutoMarkerMod.isRecordingActive()
+            ? "gui.automarker.recording_active" : "gui.automarker.recording_inactive");
+        graphics.text(this.font, status, x - this.font.width(status) / 2, y + ROW_H * 3 + 82,
+            AutoMarkerMod.isRecordingActive() ? 0xFF55FF55 : 0xFFFFAA00);
     }
     //#else
     //$$ @Override
@@ -155,10 +178,15 @@ public class AutoMarkerConfigScreen extends Screen {
     //$$     super.render(context, mouseX, mouseY, delta);
     //$$     int x = this.width / 2;
     //$$     int y = this.height / 4;
-    //$$     int leftX = x - COL_W - GAP / 2;
+    //$$     int colW = Math.min(COL_W, Math.max(90, (this.width - 30 - GAP) / 2));
+    //$$     int leftX = x - colW - GAP / 2;
     //$$     context.drawTextWithShadow(this.textRenderer, this.title, x - this.textRenderer.getWidth(this.title) / 2, y - 20, 0xFFFFFFFF);
     //$$     Text label = Text.translatable("gui.automarker.chat_keywords_label");
     //$$     context.drawTextWithShadow(this.textRenderer, label, leftX, y + ROW_H * 3 + 6, 0xFFA0A0A0);
+    //$$     Text status = Text.translatable(AutoMarkerMod.isRecordingActive()
+    //$$         ? "gui.automarker.recording_active" : "gui.automarker.recording_inactive");
+    //$$     context.drawTextWithShadow(this.textRenderer, status, x - this.textRenderer.getWidth(status) / 2,
+    //$$         y + ROW_H * 3 + 82, AutoMarkerMod.isRecordingActive() ? 0xFF55FF55 : 0xFFFFAA00);
     //$$ }
     //#endif
 
@@ -188,19 +216,29 @@ public class AutoMarkerConfigScreen extends Screen {
     //#if MC>=260100
     @Override
     public void onClose() {
+        this.minecraft.setScreen(this.parent);
+    }
+
+    private void saveAndClose() {
         if (this.chatKeywordsEdit != null) {
             config.chatKeywords = this.chatKeywordsEdit.getValue();
         }
-        config.save();
+        AutoMarkerMod.config.copyFrom(config);
+        AutoMarkerMod.config.save();
         this.minecraft.setScreen(this.parent);
     }
     //#else
     //$$ @Override
     //$$ public void close() {
+    //$$     this.client.setScreen(this.parent);
+    //$$ }
+    //$$
+    //$$ private void saveAndClose() {
     //$$     if (this.chatKeywordsEdit != null) {
     //$$         config.chatKeywords = this.chatKeywordsEdit.getText();
     //$$     }
-    //$$     config.save();
+    //$$     AutoMarkerMod.config.copyFrom(config);
+    //$$     AutoMarkerMod.config.save();
     //$$     this.client.setScreen(this.parent);
     //$$ }
     //#endif

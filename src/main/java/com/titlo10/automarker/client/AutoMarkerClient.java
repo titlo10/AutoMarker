@@ -48,6 +48,7 @@ public class AutoMarkerClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
             lastDimension = null;
+            AutoMarkerMod.resetSession();
         });
 
         //#if MC>=260100
@@ -75,6 +76,7 @@ public class AutoMarkerClient implements ClientModInitializer {
         //#endif
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            AutoMarkerMod.clientTick();
             while (configKeyBinding.consumeClick()) {
                 //#if MC>=260100
                 client.setScreen(new AutoMarkerConfigScreen(client.screen));
@@ -91,7 +93,7 @@ public class AutoMarkerClient implements ClientModInitializer {
                         lastDimension = currentDim;
                     } else if (!lastDimension.equals(currentDim)) {
                         lastDimension = currentDim;
-                        String cleanName = currentDim.contains(":") ? currentDim.split(":")[1] : currentDim;
+                        String cleanName = AutoMarkerMod.getDimensionName(currentDim);
                         AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.dimension_change", cleanName));
                     }
                 }
@@ -102,7 +104,7 @@ public class AutoMarkerClient implements ClientModInitializer {
                 //$$         lastDimension = currentDim;
                 //$$     } else if (!lastDimension.equals(currentDim)) {
                 //$$         lastDimension = currentDim;
-                //$$         String cleanName = currentDim.contains(":") ? currentDim.split(":")[1] : currentDim;
+                //$$         String cleanName = AutoMarkerMod.getDimensionName(currentDim);
                 //$$         AutoMarkerMod.addMarker(AutoMarkerMod.getTranslation("marker.automarker.dimension_change", cleanName));
                 //$$     }
                 //$$ }
